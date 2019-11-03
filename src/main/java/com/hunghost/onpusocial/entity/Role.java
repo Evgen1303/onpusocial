@@ -31,7 +31,7 @@ public class    Role {
     public void setId(Long id) {
         this.id = id;
     }
-
+// Витя пидор
 
     public String getName() {
         return name;
