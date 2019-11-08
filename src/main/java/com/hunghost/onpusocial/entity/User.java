@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 
@@ -13,7 +14,7 @@ import java.util.*;
  * Simple JavaBean domain object that represents a User
  *
  * @author Eugene Karnuta
- * @version 1.0
+ * @version 1.1
  */
 
 @Entity
@@ -38,6 +39,8 @@ public class User {
     private Studygroup studygroup;
     private Boolean starosta;
 
+    @Column(unique=true)
+    @NotNull
     private String username;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
