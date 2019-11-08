@@ -8,11 +8,10 @@ public class UserDTO {
     private String phone;
     private String description;
     private String photo;
-    private String login;
-    private String password;
-    private String role;
     private Long studygroup;
     private Boolean starosta;
+    private String username;
+    private String password;
 
     @Override
     public String toString() {
@@ -24,11 +23,10 @@ public class UserDTO {
                 ", phone='" + phone + '\'' +
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
                 ", studygroup=" + studygroup +
                 ", starosta=" + starosta +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 
@@ -88,30 +86,6 @@ public class UserDTO {
         this.photo = photo;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public Long getStudygroup() {
         return studygroup;
     }
@@ -126,5 +100,21 @@ public class UserDTO {
 
     public void setStarosta(Boolean starosta) {
         this.starosta = starosta;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

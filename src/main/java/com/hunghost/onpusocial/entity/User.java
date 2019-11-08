@@ -42,6 +42,7 @@ public class User {
     @Column(unique=true)
     @NotNull
     private String username;
+
     private String password;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
