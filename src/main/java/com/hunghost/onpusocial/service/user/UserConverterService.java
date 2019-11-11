@@ -21,6 +21,7 @@ public class UserConverterService {
 
     public User convertToEntity(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
+        if(userDTO.getStudygroup() != null)
         user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
         return user;
     }

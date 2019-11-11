@@ -42,7 +42,6 @@ public class AuthController {
         HttpSession session = req.getSession(true);
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
         return sc.getAuthentication().isAuthenticated();
-
     }
 
 
