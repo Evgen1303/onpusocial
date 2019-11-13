@@ -5,12 +5,18 @@ import com.hunghost.onpusocial.dto.UserDTO;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -22,7 +28,9 @@ public class UserController {
     private UserCommandService userCommandService;
     private UserConverterService userConverterService;
 
-
+    @Autowired
+    @Qualifier("sessionRegistry")
+    private SessionRegistry sessionRegistry;
 
     @Autowired
     public UserController(UserQueryService userQueryService, UserCommandService userCommandService, UserConverterService userConverterService
@@ -30,8 +38,6 @@ public class UserController {
         this.userQueryService = userQueryService;
         this.userCommandService = userCommandService;
         this.userConverterService = userConverterService;
-
-
     }
 
     @GetMapping
@@ -45,9 +51,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return userQueryService.getUserById(id);
+              return userQueryService.getUserById(id);
     }
-
 
     @PostMapping
     public User createUser(@RequestBody UserDTO userDTO) {
@@ -65,5 +70,20 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> putUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userCommandService.updateUser(id, userConverterService.convertToEntity(userDTO)));
+    }
+
+    @GetMapping("/isfreeusername/{username}")
+    public Boolean isFreeUsername(@PathVariable String username) {
+        return userQueryService.isFreeUsername(username);
+    }
+
+    @GetMapping("/isfreeemail/{email}")
+    public Boolean isFreeEmail(@PathVariable String email) {
+        return userQueryService.isFreeEmail(email);
+    }
+
+    @GetMapping("/authusers")
+    public List<Object> getUsersFromSessionRegistry() {
+        return sessionRegistry.getAllPrincipals();
     }
 }

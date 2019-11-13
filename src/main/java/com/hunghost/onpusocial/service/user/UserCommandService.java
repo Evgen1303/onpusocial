@@ -1,8 +1,6 @@
 package com.hunghost.onpusocial.service.user;
 
-import com.hunghost.onpusocial.entity.Role;
 import com.hunghost.onpusocial.entity.User;
-import com.hunghost.onpusocial.repositories.RoleRepository;
 import com.hunghost.onpusocial.repositories.UserRepository;
 import com.hunghost.onpusocial.service.role.RoleQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import java.util.Arrays;
 public class UserCommandService {
 
     private UserRepository userRepository;
-
 
     private RoleQueryService roleQueryService;
     @Autowired

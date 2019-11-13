@@ -1,7 +1,9 @@
 package com.hunghost.onpusocial.controller;
 
         import com.hunghost.onpusocial.CustomAuthenticationManager;
+        import com.hunghost.onpusocial.entity.User;
         import com.hunghost.onpusocial.service.user.UserAuthService;
+        import com.hunghost.onpusocial.service.user.UserQueryService;
         import org.apache.logging.log4j.LogManager;
         import org.apache.logging.log4j.Logger;
         import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ package com.hunghost.onpusocial.controller;
         import org.springframework.security.core.Authentication;
         import org.springframework.security.core.context.SecurityContext;
         import org.springframework.security.core.context.SecurityContextHolder;
+        import org.springframework.security.core.userdetails.UserDetails;
         import org.springframework.web.bind.annotation.*;
 
         import javax.servlet.http.HttpServletRequest;
@@ -21,17 +24,22 @@ package com.hunghost.onpusocial.controller;
 @RequestMapping("/")
 public class AuthController {
     private UserAuthService userAuthService;
+    private UserQueryService userQueryService;
+
+
     private static final Logger log = LogManager.getLogger(UserAuthService.class);
     @Autowired
     HttpServletRequest req;
     @Autowired
     private CustomAuthenticationManager customAuthenticationManager;
+
     @Autowired
-    public AuthController(UserAuthService userAuthService) {
+    public AuthController(UserAuthService userAuthService, UserQueryService userQueryService) {
         this.userAuthService = userAuthService;
+        this.userQueryService = userQueryService;
     }
 
-    @GetMapping("loginn")
+    @GetMapping("login")
     @ResponseBody
     public Boolean login(@RequestParam String login, @RequestParam String password) {
         UsernamePasswordAuthenticationToken authReq
@@ -44,5 +52,10 @@ public class AuthController {
         return sc.getAuthentication().isAuthenticated();
     }
 
-
+    @GetMapping("/authuser")
+    public User getAuthUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userQueryService.getUserByUsername(auth.getName());
+        return user;
+    }
 }

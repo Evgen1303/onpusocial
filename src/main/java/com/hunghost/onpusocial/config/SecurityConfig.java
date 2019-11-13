@@ -1,9 +1,10 @@
-package com.hunghost.onpusocial;
+package com.hunghost.onpusocial.config;
 
 import com.hunghost.onpusocial.service.user.UserAuthService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,7 +12,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 
 @Configuration
@@ -24,21 +28,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
             .authorizeRequests()
-            .antMatchers("/loginn").permitAll()
+            .antMatchers("/login",
+                    "/users/isfreeusername/{username}",
+                    "/isfreeemail/{email}"
+                     ).permitAll()
             .anyRequest().authenticated()
             .and()
-            .httpBasic()
+                .httpBasic()
                 .and()
                 .logout().logoutSuccessUrl("/users")
-//            .and()
-//            .sessionManagement()
-//            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .csrf().disable()
-            .formLogin().disable();
+                .and()
+                .csrf().disable()
+                .formLogin().disable();
+//          .sessionManagement()
+//                .maximumSessions(1).sessionRegistry(sessionRegistry())
 
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 
     @Bean

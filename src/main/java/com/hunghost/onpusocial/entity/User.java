@@ -2,8 +2,6 @@ package com.hunghost.onpusocial.entity;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.security.core.GrantedAuthority;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,6 +26,9 @@ public class User {
     private String firstName;
     private String lastName;
     private Long birthday;
+
+    @Column(unique=true)
+    @NotNull
     private String email;
     private String phone;
     private String description;
