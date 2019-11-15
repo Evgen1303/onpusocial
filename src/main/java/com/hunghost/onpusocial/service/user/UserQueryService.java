@@ -50,6 +50,17 @@ public class UserQueryService {
             return false;
     }
 
+    public User FindUserByEmail(String email){
+        log.info("Find user by email: " + email);
+         User user =userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("Invalid email");
+        }
+        else
+            return user;
+
+    }
+
     public User getUserByUsername (String username){
        User user = userRepository.findByUsername(username);
         if (user == null) {

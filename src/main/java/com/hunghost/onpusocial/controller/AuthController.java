@@ -22,6 +22,8 @@ package com.hunghost.onpusocial.controller;
         import javax.servlet.http.HttpSession;
 
 
+        import java.util.List;
+
         import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @RestController
@@ -87,6 +89,10 @@ public class AuthController {
           return "logout successful";
     }
 
+    @GetMapping("authusers")
+    public List<Object> getUsersFromSessionRegistry() {
+        return sessionRegistry.getAllPrincipals();
+    }
 
 
 

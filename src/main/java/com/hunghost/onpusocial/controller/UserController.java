@@ -10,10 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @RestController
 @CrossOrigin
@@ -24,9 +23,6 @@ public class UserController {
     private UserQueryService userQueryService;
     private UserCommandService userCommandService;
     private UserConverterService userConverterService;
-
-    @Autowired
-    private SessionRegistry sessionRegistry;
 
     @Autowired
     public UserController(UserQueryService userQueryService, UserCommandService userCommandService, UserConverterService userConverterService
@@ -46,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
               return userQueryService.getUserById(id);
     }
 
@@ -78,8 +74,8 @@ public class UserController {
         return userQueryService.isFreeEmail(email);
     }
 
-    @GetMapping("/authusers")
-    public List<Object> getUsersFromSessionRegistry() {
-        return sessionRegistry.getAllPrincipals();
+    @GetMapping("/getbyemail/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        return userQueryService.FindUserByEmail(email);
     }
 }
