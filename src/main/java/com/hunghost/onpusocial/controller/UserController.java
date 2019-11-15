@@ -5,18 +5,15 @@ import com.hunghost.onpusocial.dto.UserDTO;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.service.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -29,7 +26,6 @@ public class UserController {
     private UserConverterService userConverterService;
 
     @Autowired
-    @Qualifier("sessionRegistry")
     private SessionRegistry sessionRegistry;
 
     @Autowired

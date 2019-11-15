@@ -1,4 +1,4 @@
-package com.hunghost.onpusocial.service.user;
+package com.hunghost.onpusocial.security;
 
 import com.hunghost.onpusocial.entity.Role;
 import com.hunghost.onpusocial.entity.User;

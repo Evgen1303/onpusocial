@@ -1,6 +1,5 @@
-package com.hunghost.onpusocial.config;
+package com.hunghost.onpusocial.security;
 
-import com.hunghost.onpusocial.service.user.UserAuthService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 
 @Configuration
@@ -33,19 +32,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/login",
                     "/users/isfreeusername/{username}",
-                    "/isfreeemail/{email}"
+                    "/isfreeemail/{email}",
+                    "/",
+                    "/users//authusers"
                      ).permitAll()
             .anyRequest().authenticated()
             .and()
+                .sessionManagement()
+                .maximumSessions(1).sessionRegistry(sessionRegistry())
+                .and().and()
                 .httpBasic()
-                .and()
-                .logout().logoutSuccessUrl("/users")
+                 .and()
+//                .logout().logoutSuccessUrl("/logout_successful")
+                .logout()
+                .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .csrf().disable()
                 .formLogin().disable();
-//          .sessionManagement()
-//                .maximumSessions(1).sessionRegistry(sessionRegistry())
 
+    }
+
+
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 
     @Bean

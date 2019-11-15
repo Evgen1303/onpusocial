@@ -1,9 +1,8 @@
-package com.hunghost.onpusocial;
+package com.hunghost.onpusocial.security;
 
 import com.hunghost.onpusocial.entity.Role;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.repositories.UserRepository;
-import com.hunghost.onpusocial.service.user.UserAuthService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +43,10 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         if (!new BCryptPasswordEncoder().matches(password,user.getPassword())) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        else
-        return new UsernamePasswordAuthenticationToken(username, password, mapRolesToAuthorities(user.getAuthorities()));
+        else {
+            log.info("Find user by login: "+ username);
+            return new UsernamePasswordAuthenticationToken(username, password, mapRolesToAuthorities(user.getAuthorities()));
+        }
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
