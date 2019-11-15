@@ -1,9 +1,11 @@
 package com.hunghost.onpusocial.entity;
 
+import com.hunghost.onpusocial.annotation.Phone;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -29,7 +31,9 @@ public class User {
 
     @Column(unique=true)
     @NotNull
+    @Email(message = "Not suitable format for Email")
     private String email;
+    @Phone
     private String phone;
     private String description;
     private String photo;
