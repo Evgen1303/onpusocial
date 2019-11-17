@@ -59,6 +59,7 @@ public class AuthController {
 
         HttpSession session = req.getSession(true);
         sessionRegistry.registerNewSession(session.getId(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        log.info("Login session: "+ session.getId());
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
 
         return sc.getAuthentication().isAuthenticated();
@@ -77,7 +78,7 @@ public class AuthController {
         if (auth != null){
             HttpSession session = req.getSession(true);
             new SecurityContextLogoutHandler().logout(req, response, auth);// <= This is the call you are looking for.
-//            sessionRegistry.removeSessionInformation(session.getId());
+            sessionRegistry.removeSessionInformation(session.getId());
             return true;
         }
         return false;

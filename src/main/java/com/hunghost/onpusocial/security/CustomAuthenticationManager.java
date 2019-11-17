@@ -44,7 +44,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         else {
-            log.info("Find user by login: "+ username);
+            log.info("Authenticate user: "+ username);
             return new UsernamePasswordAuthenticationToken(username, password, mapRolesToAuthorities(user.getAuthorities()));
         }
     }

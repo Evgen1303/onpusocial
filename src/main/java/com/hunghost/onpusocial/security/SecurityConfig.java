@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/users/isfreeusername/{username}",
                     "/isfreeemail/{email}",
                     "/",
-                    "/users//authusers"
+                    "/authusers"
                      ).permitAll()
             .anyRequest().authenticated()
             .and()
@@ -49,7 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .formLogin().disable();
-
     }
 
 
