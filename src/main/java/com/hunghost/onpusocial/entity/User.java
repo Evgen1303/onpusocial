@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hunghost.onpusocial.annotation.Phone;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -56,9 +57,28 @@ public class User {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
-    private Collection<Role> authorities;
+    private Collection<Role> authorities = new HashSet<>();
 
-    public User(String firstName, String lastName, Long birthday, String email, String phone, String description, String photo, Studygroup studygroup, Boolean starosta, String username, String password, Collection<Role> authorities) {
+    @ManyToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = { @JoinColumn(name = "channel_id") },
+            inverseJoinColumns = { @JoinColumn(name = "subscriber_id") }
+    )
+    private Set<User> subscribers;
+
+
+    @ManyToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = { @JoinColumn(name = "subscriber_id") },
+            inverseJoinColumns = { @JoinColumn(name = "channel_id") }
+    )
+    private Set<User> subscriptions = new HashSet<>();
+
+    public User(String firstName, String lastName, Long birthday, @NotNull @Email(message = "Not suitable format for Email") String email, String phone, String description, String photo, Studygroup studygroup, Boolean starosta, @NotNull String username, String password, Collection<Role> authorities) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -71,6 +91,25 @@ public class User {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", description='" + description + '\'' +
+                ", photo='" + photo + '\'' +
+                ", studygroup=" + studygroup +
+                ", starosta=" + starosta +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", authorities=" + authorities +
+                '}';
     }
 
     public User() {
@@ -178,5 +217,35 @@ public class User {
 
     public void setAuthorities(Collection<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    public void setSubscribers(Set<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public void setSubscriptions(Set<User> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
+    public void addSubscriptions(User user){
+        subscriptions.add(user);
+    }
+
+    public void addSubscribers(User user){
+        subscribers.add(user);
+    }
+
+    public Boolean deleteSubscriptions(User user){
+        return  subscriptions.remove(user);
+    }
+
+    @JsonIgnore
+    public Set<User> getSubscribers() {
+        return subscribers;
+    }
+
+    @JsonIgnore
+    public Set<User> getSubscriptions() {
+        return subscriptions;
     }
 }

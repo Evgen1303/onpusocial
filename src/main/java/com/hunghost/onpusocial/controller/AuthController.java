@@ -4,11 +4,13 @@ package com.hunghost.onpusocial.controller;
         import com.hunghost.onpusocial.security.CustomAuthenticationManager;
         import com.hunghost.onpusocial.entity.User;
         import com.hunghost.onpusocial.security.UserAuthService;
+        import com.hunghost.onpusocial.service.user.UserCommandService;
         import com.hunghost.onpusocial.service.user.UserQueryService;
         import org.apache.logging.log4j.LogManager;
         import org.apache.logging.log4j.Logger;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
         import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
         import org.springframework.security.core.Authentication;
         import org.springframework.security.core.context.SecurityContext;
@@ -22,6 +24,7 @@ package com.hunghost.onpusocial.controller;
         import javax.servlet.http.HttpSession;
 
 
+        import java.util.Collection;
         import java.util.List;
 
         import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
@@ -32,6 +35,7 @@ package com.hunghost.onpusocial.controller;
 public class AuthController {
 
     private UserQueryService userQueryService;
+    private UserCommandService userCommandService;
     @Autowired
     private SessionRegistry sessionRegistry;
 
@@ -39,13 +43,13 @@ public class AuthController {
     @Autowired
     HttpServletRequest req;
     HttpServletResponse response;
-
     @Autowired
     private CustomAuthenticationManager customAuthenticationManager;
 
     @Autowired
-    public AuthController(UserAuthService userAuthService, UserQueryService userQueryService) {
+    public AuthController(UserQueryService userQueryService, UserCommandService userCommandService) {
         this.userQueryService = userQueryService;
+        this.userCommandService = userCommandService;
     }
 
     @GetMapping("login")
@@ -61,28 +65,14 @@ public class AuthController {
         sessionRegistry.registerNewSession(session.getId(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         log.info("Login session: "+ session.getId());
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-
         return sc.getAuthentication().isAuthenticated();
     }
 
     @GetMapping("authuser")
     public User getAuthUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userQueryService.getUserByUsername(auth.getName());
-        return user;
+        return userQueryService.getAuthUser();
     }
 
-    @GetMapping("custom_logout")
-    public Boolean logout() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            HttpSession session = req.getSession(true);
-            new SecurityContextLogoutHandler().logout(req, response, auth);// <= This is the call you are looking for.
-            sessionRegistry.removeSessionInformation(session.getId());
-            return true;
-        }
-        return false;
-    }
 
     @GetMapping("/")
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
@@ -95,6 +85,25 @@ public class AuthController {
         return sessionRegistry.getAllPrincipals();
     }
 
+    @PostMapping("authuser/subscriptions/{peruser}")
+    public String subscribeToUser (@PathVariable String peruser){
+        return  userCommandService.SubscribeToUser(peruser);
 
+    }
+
+    @GetMapping("authuser/subscriptions")
+    public Collection<User> getSubscriptionAuthUser (){
+        return userQueryService.getSubscriptionAuthUser();
+    }
+
+    @GetMapping("authuser/subscriptions/{login}")
+    public Boolean isSubscriptionAuthUser (@PathVariable String login){
+        return userQueryService.isSubscriptionToUser(login);
+    }
+
+    @GetMapping("authuser/subscribers")
+    public Collection<User> getSubscribersAuthUser (){
+        return userQueryService.getSubscribersAuthUser();
+    }
 
 }

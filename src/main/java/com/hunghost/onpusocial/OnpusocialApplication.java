@@ -41,6 +41,7 @@ public class OnpusocialApplication {
                         new Role("ROLE_USER"),
                         new Role("ROLE_ADMIN")));
 
+
         if (userRepository.findByUsername(user.getUsername()) == null){
             userRepository.save(user);
         }

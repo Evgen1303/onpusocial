@@ -52,4 +52,27 @@ public class UserCommandService {
         return user;
     }
 
+    public String SubscribeToUser(String username){
+       User subuser = userQueryService.getUserByUsername(username);
+       User authuser = userQueryService.getAuthUser();
+
+       if(subuser != null)
+       {
+       if (userQueryService.isSubscriptionToUser(username) == false) {
+           authuser.addSubscriptions(subuser);
+           userRepository.save(authuser);
+        return "Subscribed";
+       }
+       else {
+           authuser.deleteSubscriptions(subuser);
+           userRepository.save(authuser);
+           return "Unsubscribed";
+       }
+
+       } else return "Not found user";
+    }
+
+
+
+
 }

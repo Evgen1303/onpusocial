@@ -12,6 +12,7 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 
 
 @RestController
@@ -41,9 +42,9 @@ public class UserController {
         return userQueryService.getPage(pageable);
     }
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-              return userQueryService.getUserById(id);
+    @GetMapping("/{login}")
+    public User getUserBylogin(@PathVariable String login) {
+        return userQueryService.getUserByUsername(login);
     }
 
     @PostMapping
@@ -78,4 +79,15 @@ public class UserController {
     public User getUserByEmail(@PathVariable String email) {
         return userQueryService.FindUserByEmail(email);
     }
+
+    @GetMapping("/{login}/subscriptions")
+    public Collection<User> getSubscriptions (@PathVariable String login){
+        return userQueryService.getSubscriptions(login);
+    }
+
+    @GetMapping("/{login}/subscribers")
+    public Collection<User> getSubscribers(@PathVariable String login){
+        return userQueryService.getSubscribers(login);
+    }
+
 }
