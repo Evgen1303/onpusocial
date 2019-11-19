@@ -16,7 +16,6 @@ import java.util.Collection;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("users")
 public class UserController {
     private static final int DEFAULT_PAGE_SIZE = 20;
@@ -74,7 +73,6 @@ public class UserController {
         return userQueryService.isFreeEmail(email);
     }
 
-    @CrossOrigin
     @GetMapping("/getbyemail/{email}")
     public User getUserByEmail(@PathVariable String email) {
         return userQueryService.FindUserByEmail(email);
