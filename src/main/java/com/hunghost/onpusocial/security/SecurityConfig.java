@@ -3,7 +3,6 @@ package com.hunghost.onpusocial.security;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,6 +14,12 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -37,21 +42,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/authusers"
                      ).permitAll()
             .anyRequest().authenticated()
-            .and()
+                            .and()
                 .sessionManagement()
                 .maximumSessions(1).sessionRegistry(sessionRegistry())
                 .and().and()
                 .httpBasic()
                  .and()
-//                .logout().logoutSuccessUrl("/logout_successful")
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
-                .csrf().disable()
+//                .csrf().disable()
                 .formLogin().disable();
+
     }
 
-
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
