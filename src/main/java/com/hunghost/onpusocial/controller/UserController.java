@@ -32,6 +32,7 @@ public class UserController {
         this.userConverterService = userConverterService;
     }
 
+    @CrossOrigin
     @GetMapping
     public Page<User> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
@@ -41,11 +42,13 @@ public class UserController {
         return userQueryService.getPage(pageable);
     }
 
+    @CrossOrigin
     @GetMapping("/{login}")
     public User getUserBylogin(@PathVariable String login) {
         return userQueryService.getUserByUsername(login);
     }
 
+    @CrossOrigin
     @PostMapping
     public User createUser(@RequestBody UserDTO userDTO) {
         User user = userConverterService.convertToEntity(userDTO);
@@ -53,26 +56,31 @@ public class UserController {
         return user;
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable Long id) {
         userCommandService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
+    @CrossOrigin
     @PutMapping("/{login}")
     public ResponseEntity<User> putUser(@PathVariable String login, @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userCommandService.updateUser(login, userDTO));
     }
+    @CrossOrigin
     @GetMapping("/isfreeusername/{username}")
     public Boolean isFreeUsername(@PathVariable String username) {
         return userQueryService.isFreeUsername(username);
     }
 
+    @CrossOrigin
     @GetMapping("/isfreeemail/{email}")
     public Boolean isFreeEmail(@PathVariable String email) {
         return userQueryService.isFreeEmail(email);
     }
 
+    @CrossOrigin
     @GetMapping("/getbyemail/{email}")
     public User getUserByEmail(@PathVariable String email) {
         return userQueryService.FindUserByEmail(email);
