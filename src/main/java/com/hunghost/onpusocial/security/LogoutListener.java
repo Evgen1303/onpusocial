@@ -18,8 +18,7 @@ public class LogoutListener implements ApplicationListener<SessionDestroyedEvent
     @Override
     public void onApplicationEvent(SessionDestroyedEvent event)
     {
-            log.info("LOG OUT CHECK: Session:"+ event.getId());
-
+            log.info("Logout session:"+ event.getId());
             sessionRegistry.removeSessionInformation(event.getId());
     }
 

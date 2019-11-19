@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.service.user;
 
+import com.hunghost.onpusocial.dto.UserDTO;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.exception.RequestValidationException;
 import com.hunghost.onpusocial.repositories.UserRepository;
@@ -18,22 +19,25 @@ public class UserCommandService {
     private UserRepository userRepository;
     private UserQueryService userQueryService;
     private RoleQueryService roleQueryService;
+    private  UserConverterService userConverterService;
     private static final Logger log = LogManager.getLogger(UserCommandService.class);
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserCommandService(UserRepository userRepository, UserQueryService userQueryService, RoleQueryService roleQueryService) {
+    public UserCommandService(UserRepository userRepository, UserQueryService userQueryService, RoleQueryService roleQueryService,
+                              UserConverterService userConverterService, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userQueryService = userQueryService;
         this.roleQueryService = roleQueryService;
+        this.userConverterService = userConverterService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void saveUser(User user) {
         user.setAuthorities( Arrays.asList(
                 roleQueryService.getRoleById(1L)));
         user.setPassword( passwordEncoder.encode(user.getPassword()));
-        if(userQueryService.isFreeEmail(user.getEmail()) == true && userQueryService.isFreeUsername(user.getUsername()) == true) {
+        if(userQueryService.isFreeEmail(user.getEmail()) && userQueryService.isFreeUsername(user.getUsername())) {
             userRepository.save(user);
             log.info("New user is save");
     }
@@ -46,10 +50,11 @@ public class UserCommandService {
         userRepository.deleteById(id);
     }
 
-    public User updateUser(Long id, User user) {
-        user.setId(id);
-        userRepository.save(user);
-        return user;
+    public User updateUser(String login, UserDTO userDTO) {
+        User updateuser = userConverterService.convertToEntityForUpdate(userDTO,userQueryService.getUserByUsername(login));
+        userRepository.save(updateuser);
+        log.info("Update user: "+updateuser.getUsername());
+        return updateuser;
     }
 
     public String SubscribeToUser(String username){
@@ -58,17 +63,18 @@ public class UserCommandService {
 
        if(subuser != null)
        {
-       if (userQueryService.isSubscriptionToUser(username) == false) {
+       if (!userQueryService.isSubscriptionToUser(username)) {
            authuser.addSubscriptions(subuser);
            userRepository.save(authuser);
+           log.info("User: "+authuser.getUsername()+ " subscribe to "+subuser.getUsername());
         return "Subscribed";
        }
        else {
            authuser.deleteSubscriptions(subuser);
            userRepository.save(authuser);
+           log.info("User: "+authuser.getUsername()+ " unsubscribe to "+subuser.getUsername());
            return "Unsubscribed";
        }
-
        } else return "Not found user";
     }
 
