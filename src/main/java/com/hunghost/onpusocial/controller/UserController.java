@@ -74,6 +74,7 @@ public class UserController {
         return userQueryService.isFreeEmail(email);
     }
 
+    @CrossOrigin
     @GetMapping("/getbyemail/{email}")
     public User getUserByEmail(@PathVariable String email) {
         return userQueryService.FindUserByEmail(email);
