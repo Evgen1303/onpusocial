@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     "/users/isfreeusername/{username}",
                     "/isfreeemail/{email}",
                     "/",
-                    "/authusers"
+                    "/authusers",
+                    "/users/getbyemail/{email}"
                      ).permitAll()
             .anyRequest().authenticated()
                             .and()
