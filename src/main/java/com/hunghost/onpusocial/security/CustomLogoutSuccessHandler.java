@@ -17,8 +17,10 @@ import java.io.IOException;
 
 public class CustomLogoutSuccessHandler extends
         SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
+
     @Autowired
     private SessionRegistry sessionRegistry;
+
     private static final Logger log = LogManager.getLogger(CustomLogoutSuccessHandler.class);
     @Override
     public void onLogoutSuccess (

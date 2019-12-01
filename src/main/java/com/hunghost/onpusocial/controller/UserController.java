@@ -18,7 +18,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("users")
 public class UserController {
-    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final int DEFAULT_PAGE_SIZE = 25;
     private static final String DEFAULT_SORT_FIELD = "firstName";
     private UserQueryService userQueryService;
     private UserCommandService userCommandService;

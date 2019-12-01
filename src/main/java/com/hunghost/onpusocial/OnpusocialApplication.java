@@ -13,7 +13,7 @@ package com.hunghost.onpusocial;
         import java.util.Arrays;
 
 @SpringBootApplication
-public class OnpusocialApplication {
+    public class OnpusocialApplication {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;

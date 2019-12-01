@@ -15,6 +15,7 @@ public class LogoutListener implements ApplicationListener<SessionDestroyedEvent
     private static final Logger log = LogManager.getLogger(UserAuthService.class);
     @Autowired
     private SessionRegistry sessionRegistry;
+
     @Override
     public void onApplicationEvent(SessionDestroyedEvent event)
     {

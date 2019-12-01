@@ -33,8 +33,10 @@ public class CustomAuthenticationManager implements AuthenticationManager {
     private SessionRegistry sessionRegistry;
     private UserRepository userRepository;
     private static final Logger log = LogManager.getLogger(UserAuthService.class);
+
     @Autowired
     HttpServletRequest req;
+
     HttpServletResponse response;
 
     @Autowired

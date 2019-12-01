@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class PostQueryService {
     private PostRepository postRepository;
@@ -24,4 +25,11 @@ public class PostQueryService {
     public Page<Post> getPage(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
+
+    public Page<Post> getPostByUserLogin(String username, Pageable pageable){
+        return postRepository.findByUserUsername(username, pageable);
+    }
+
+
+
 }

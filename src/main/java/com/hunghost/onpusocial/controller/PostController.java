@@ -14,6 +14,8 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("posts")
@@ -62,6 +64,14 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<Post> putPost(@PathVariable Long id, @RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(postCommandService.updatePost(id, postConverterService.convertToEntity(postDTO)));
+    }
+
+    @GetMapping("/user/{login}")
+    public Page<Post> getPostsbyUserLogin(@PathVariable String login,
+                                          @PageableDefault(size = DEFAULT_PAGE_SIZE)
+                                          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                          Pageable pageable) {
+        return postQueryService.getPostByUserLogin(login, pageable);
     }
 
 

@@ -4,7 +4,6 @@ public class PostDTO {
     private String namePost;
     private String content;
     private Long user;
-    private Long restriction;
     private Long date;
 
     @Override
@@ -13,7 +12,7 @@ public class PostDTO {
                 "namePost='" + namePost + '\'' +
                 ", content='" + content + '\'' +
                 ", userId=" + user.toString() +
-                ", restriction=" + restriction +
+
                 ", date=" + date +
                 '}';
     }
@@ -43,13 +42,6 @@ public class PostDTO {
         this.user = user;
     }
 
-    public Long getRestriction() {
-        return restriction;
-    }
-
-    public void setRestriction(Long restriction) {
-        this.restriction = restriction;
-    }
 
     public Long getDate() {
         return date;
