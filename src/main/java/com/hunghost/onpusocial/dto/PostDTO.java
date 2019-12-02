@@ -4,6 +4,10 @@ public class PostDTO {
     private String namePost;
     private String content;
     private Long user;
+    private Long studygroup;
+    private Long kafedra;
+    private Long faculty;
+    private Boolean subscribers;
     private Long date;
 
     @Override
@@ -11,12 +15,14 @@ public class PostDTO {
         return "PostDTO{" +
                 "namePost='" + namePost + '\'' +
                 ", content='" + content + '\'' +
-                ", userId=" + user.toString() +
-
+                ", user=" + user +
+                ", studygroup=" + studygroup +
+                ", kafedra=" + kafedra +
+                ", faculty=" + faculty +
+                ", subscribers=" + subscribers +
                 ", date=" + date +
                 '}';
     }
-
 
     public String getNamePost() {
         return namePost;
@@ -42,6 +48,37 @@ public class PostDTO {
         this.user = user;
     }
 
+    public Long getStudygroup() {
+        return studygroup;
+    }
+
+    public void setStudygroup(Long studygroup) {
+        this.studygroup = studygroup;
+    }
+
+    public Long getKafedra() {
+        return kafedra;
+    }
+
+    public void setKafedra(Long kafedra) {
+        this.kafedra = kafedra;
+    }
+
+    public Long getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Long faculty) {
+        this.faculty = faculty;
+    }
+
+    public Boolean getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Boolean subscribers) {
+        this.subscribers = subscribers;
+    }
 
     public Long getDate() {
         return date;

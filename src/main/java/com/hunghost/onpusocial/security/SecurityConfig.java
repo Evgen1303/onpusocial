@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,16 +35,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-            .authorizeRequests()
-            .antMatchers("/login",
-                    "/users/isfreeusername/{username}",
-                    "/isfreeemail/{email}",
-                    "/",
-                    "/authusers",
-                    "/users/getbyemail/{email}"
-                     ).permitAll()
-            .anyRequest().authenticated()
-                            .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/login",
+                        "/users/isfreeusername/{username}",
+                        "/isfreeemail/{email}",
+                        "/",
+                        "/authusers",
+                        "/users/getbyemail/{email}",
+                        "/users/{login}"
+                ).permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .sessionManagement()
                 .maximumSessions(1).sessionRegistry(sessionRegistry())
                 .and().and()
@@ -52,8 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
-            .csrf().disable()
+                .csrf().disable()
                 .formLogin().disable();
+
 
     }
 //

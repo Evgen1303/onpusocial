@@ -46,9 +46,7 @@ package com.hunghost.onpusocial;
             userRepository.save(user);
         }
     }
-
     public static void main(String[] args) {
         SpringApplication.run(OnpusocialApplication.class, args);
     }
-
 }
