@@ -93,6 +93,19 @@ public class User {
         this.authorities = authorities;
     }
 
+    public User(String firstName, String lastName, Long birthday, @NotNull @Email(message = "Not suitable format for Email") String email, String phone, String description, String photo, Studygroup studygroup, Boolean starosta, @NotNull String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.phone = phone;
+        this.description = description;
+        this.photo = photo;
+        this.studygroup = studygroup;
+        this.starosta = starosta;
+        this.username = username;
+        this.password = password;
+    }
 
     @Override
     public String toString() {
