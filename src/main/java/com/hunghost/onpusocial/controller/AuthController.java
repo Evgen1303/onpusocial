@@ -10,6 +10,9 @@ package com.hunghost.onpusocial.controller;
         import org.springframework.http.HttpStatus;
         import org.springframework.security.core.session.SessionRegistry;
         import org.springframework.web.bind.annotation.*;
+
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpSession;
         import java.util.Collection;
         import java.util.List;
 
@@ -24,6 +27,8 @@ public class AuthController {
     private SessionRegistry sessionRegistry;
     @Autowired
     private CustomAuthenticationManager customAuthenticationManager;
+    @Autowired
+    HttpServletRequest req;
 
     private static final Logger log = LogManager.getLogger(UserCommandService.class);
 
@@ -42,6 +47,9 @@ log.info("Request /login check");
 
     @GetMapping("authuser")
     public User getAuthUser() {
+        HttpSession session = req.getSession(true);
+        log.info("Check /authuser. Your sessions: "+ session.getId());
+
         return userQueryService.getAuthUser();
     }
 
