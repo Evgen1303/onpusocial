@@ -16,20 +16,20 @@ public class Post {
     private String namePost;
     @Column(name="content")
     private String content;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "studygroup_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Studygroup studygroup;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kafedra_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Kafedra kafedra;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "faculty_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Faculty faculty;

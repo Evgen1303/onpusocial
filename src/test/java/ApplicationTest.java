@@ -5,6 +5,7 @@ import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.repositories.UserRepository;
 import com.hunghost.onpusocial.service.user.UserCommandService;
 import com.hunghost.onpusocial.service.user.UserConverterService;
+import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class ApplicationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserQueryService userQueryService;
+
     @Test
     public void testConverterService() throws Exception {
         UserDTO userDTO = new UserDTO(
@@ -52,8 +56,9 @@ public class ApplicationTest {
     }
 
 
+    @Test
     public void testSaveCommand() throws Exception {
-        User user = new User(
+        UserDTO userdto = new UserDTO(
                 "Viktor",
                 "Sapojnyak",
                 1220231l,
@@ -65,7 +70,8 @@ public class ApplicationTest {
                 null,
                 "sap",
                 "pass");
-        userCommandService.saveUser(user);
+        userCommandService.saveUser(userConverterService.convertToEntity(userdto));
+        User user = userQueryService.getUserByUsername("sap");
         assertEquals("sap", user.getUsername());
         assertTrue(passwordEncoder.matches("pass",user.getPassword()));
     }

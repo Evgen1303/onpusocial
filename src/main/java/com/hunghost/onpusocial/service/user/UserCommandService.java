@@ -34,8 +34,7 @@ public class UserCommandService {
     }
 
     public void saveUser(User user) {
-        user.setAuthorities( Arrays.asList(
-                roleQueryService.getRoleById(1L)));
+        user.addAuthorities(roleQueryService.getRoleById(1l));
         user.setPassword( passwordEncoder.encode(user.getPassword()));
         if(userQueryService.isFreeEmail(user.getEmail()) && userQueryService.isFreeUsername(user.getUsername())) {
             userRepository.save(user);

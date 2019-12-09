@@ -230,7 +230,12 @@ public class User {
     }
 
     public void setAuthorities(Collection<Role> authorities) {
+
         this.authorities = authorities;
+    }
+    public void addAuthorities(Role authoriti) {
+
+        this.authorities.add(authoriti);
     }
 
     public void setSubscribers(Set<User> subscribers) {
