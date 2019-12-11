@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().and()
                 .httpBasic()
                 .and()
-//                .addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class)
+                .addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class)
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
