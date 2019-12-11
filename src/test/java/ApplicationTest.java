@@ -1,6 +1,5 @@
 import com.hunghost.onpusocial.OnpusocialApplication;
 import com.hunghost.onpusocial.dto.UserDTO;
-import com.hunghost.onpusocial.entity.Role;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.repositories.UserRepository;
 import com.hunghost.onpusocial.service.user.UserCommandService;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,9 +26,9 @@ public class ApplicationTest {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserQueryService userQueryService;
+
 
     @Test
     public void testConverterService() throws Exception {
@@ -82,6 +79,14 @@ public class ApplicationTest {
         assertEquals("login", user.getUsername());
       assertTrue(passwordEncoder.matches("pass",user.getPassword()));
     }
+
+    @Test
+    public void SubscribeOnUser()throws Exception{
+       String answer = userCommandService.SubscribeToUser("sap","login");
+        assertEquals("Subscribed",answer);
+    }
+
+
 
 
 }

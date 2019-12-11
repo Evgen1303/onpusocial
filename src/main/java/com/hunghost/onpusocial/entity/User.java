@@ -60,7 +60,7 @@ public class User {
     private Collection<Role> authorities = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscriptions",
             joinColumns = { @JoinColumn(name = "channel_id") },
@@ -70,7 +70,7 @@ public class User {
 
 
     @ManyToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscriptions",
             joinColumns = { @JoinColumn(name = "subscriber_id") },

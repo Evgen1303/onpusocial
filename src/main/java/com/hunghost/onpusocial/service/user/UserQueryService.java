@@ -109,9 +109,12 @@ public class UserQueryService {
     public Boolean isSubscriptionToUser(String login){
         User authuser = this.getAuthUser();
         User subuser = this.getUserByUsername(login);
-        if (authuser.getSubscriptions().contains(subuser) == true)
-            return true;
-        else return false;
+        return authuser.getSubscriptions().contains(subuser);
+    }
+    public Boolean isSubscriptionToUser(String login, String authuserlogin){
+        User authuser = this.getUserByUsername(authuserlogin);
+        User subuser = this.getUserByUsername(login);
+return authuser.getSubscriptions().contains(subuser);
     }
 
 }
