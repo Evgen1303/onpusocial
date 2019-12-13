@@ -1,19 +1,15 @@
 package com.hunghost.onpusocial.security;
 
-import com.hunghost.onpusocial.service.user.UserCommandService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class WebSecurityCorsFilter implements Filter {
-    private static final Logger log = LogManager.getLogger(UserCommandService.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
@@ -30,9 +26,9 @@ public class WebSecurityCorsFilter implements Filter {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             chain.doFilter(req, res);
-            log.info(response.getHeaderNames());
         }
     }
+
     @Override
     public void destroy() {
     }

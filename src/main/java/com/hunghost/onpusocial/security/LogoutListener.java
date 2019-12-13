@@ -9,7 +9,6 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Component;
 
 
-
 @Component
 public class LogoutListener implements ApplicationListener<SessionDestroyedEvent> {
     private static final Logger log = LogManager.getLogger(UserAuthService.class);
@@ -17,10 +16,9 @@ public class LogoutListener implements ApplicationListener<SessionDestroyedEvent
     private SessionRegistry sessionRegistry;
 
     @Override
-    public void onApplicationEvent(SessionDestroyedEvent event)
-    {
-            log.info("Logout session:"+ event.getId());
-            sessionRegistry.removeSessionInformation(event.getId());
+    public void onApplicationEvent(SessionDestroyedEvent event) {
+        log.info("Logout session:" + event.getId());
+        sessionRegistry.removeSessionInformation(event.getId());
     }
 
 }

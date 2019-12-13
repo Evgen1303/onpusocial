@@ -20,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -37,12 +36,11 @@ public class CustomAuthenticationManager implements AuthenticationManager {
     @Autowired
     HttpServletRequest req;
 
-    HttpServletResponse response;
-
     @Autowired
     public CustomAuthenticationManager(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getPrincipal() + "";
@@ -51,29 +49,30 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        if (!new BCryptPasswordEncoder().matches(password,user.getPassword())) {
+        if (!new BCryptPasswordEncoder().matches(password, user.getPassword())) {
             throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        else {
-            log.info("Authenticate user: "+ username);
+        } else {
+            log.info("Authenticate user: " + username);
             return new UsernamePasswordAuthenticationToken(username, password, mapRolesToAuthorities(user.getAuthorities()));
         }
     }
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
     }
-        public Boolean login (String login, String password){
+
+    public Boolean login(String login, String password) {
         UsernamePasswordAuthenticationToken authReq
-                = new UsernamePasswordAuthenticationToken(login,password);
+                = new UsernamePasswordAuthenticationToken(login, password);
         Authentication auth = this.authenticate(authReq);
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(auth);
         HttpSession session = req.getSession(true);
         sessionRegistry.registerNewSession(session.getId(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        log.info("Login session: "+ session.getId());
+        log.info("Login session: " + session.getId());
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
         return sc.getAuthentication().isAuthenticated();
     }

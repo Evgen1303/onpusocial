@@ -30,7 +30,7 @@ public class User {
     private String lastName;
     private Long birthday;
 
-    @Column(unique=true)
+    @Column(unique = true)
     @NotNull
     @Email(message = "Not suitable format for Email")
     private String email;
@@ -45,7 +45,7 @@ public class User {
     private Studygroup studygroup;
     private Boolean starosta;
 
-    @Column(unique=true)
+    @Column(unique = true)
     @NotNull
     private String username;
 
@@ -63,8 +63,8 @@ public class User {
             fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscriptions",
-            joinColumns = { @JoinColumn(name = "channel_id") },
-            inverseJoinColumns = { @JoinColumn(name = "subscriber_id") }
+            joinColumns = {@JoinColumn(name = "channel_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subscriber_id")}
     )
     private Set<User> subscribers;
 
@@ -73,8 +73,8 @@ public class User {
             fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscriptions",
-            joinColumns = { @JoinColumn(name = "subscriber_id") },
-            inverseJoinColumns = { @JoinColumn(name = "channel_id") }
+            joinColumns = {@JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = {@JoinColumn(name = "channel_id")}
     )
     private Set<User> subscriptions = new HashSet<>();
 
@@ -233,6 +233,7 @@ public class User {
 
         this.authorities = authorities;
     }
+
     public void addAuthorities(Role authoriti) {
 
         this.authorities.add(authoriti);
@@ -246,16 +247,16 @@ public class User {
         this.subscriptions = subscriptions;
     }
 
-    public void addSubscriptions(User user){
+    public void addSubscriptions(User user) {
         subscriptions.add(user);
     }
 
-    public void addSubscribers(User user){
+    public void addSubscribers(User user) {
         subscribers.add(user);
     }
 
-    public Boolean deleteSubscriptions(User user){
-        return  subscriptions.remove(user);
+    public Boolean deleteSubscriptions(User user) {
+        return subscriptions.remove(user);
     }
 
     @JsonIgnore

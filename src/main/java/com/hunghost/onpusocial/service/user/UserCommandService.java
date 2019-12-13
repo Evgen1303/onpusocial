@@ -18,7 +18,7 @@ public class UserCommandService {
     private UserRepository userRepository;
     private UserQueryService userQueryService;
     private RoleQueryService roleQueryService;
-    private  UserConverterService userConverterService;
+    private UserConverterService userConverterService;
     private static final Logger log = LogManager.getLogger(UserCommandService.class);
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -43,52 +43,48 @@ public class UserCommandService {
                 log.warn("This login or mail is reserved. Login:" + user.getUsername() + ". Email: " + user.getEmail());
                 throw new RequestValidationException("This login or mail is reserved");
             }
-        }
-        else log.info("This user reserved");
+        } else log.info("This user reserved");
     }
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
     public User updateUser(String login, UserDTO userDTO) {
-        User updateuser = userConverterService.convertToEntityForUpdate(userDTO,userQueryService.getUserByUsername(login));
+        User updateuser = userConverterService.convertToEntityForUpdate(userDTO, userQueryService.getUserByUsername(login));
         userRepository.save(updateuser);
-        log.info("Update user: "+updateuser.getUsername());
+        log.info("Update user: " + updateuser.getUsername());
         return updateuser;
     }
 
-    public String SubscribeToUser(String username){
-       User subuser = userQueryService.getUserByUsername(username);
-       User authuser = userQueryService.getAuthUser();
-       return LogicSubscribeToUser(subuser,authuser);
+    public String SubscribeToUser(String username) {
+        User subuser = userQueryService.getUserByUsername(username);
+        User authuser = userQueryService.getAuthUser();
+        return LogicSubscribeToUser(subuser, authuser);
     }
 
-    public String SubscribeToUser(String username, String owner){
+    public String SubscribeToUser(String username, String owner) {
         User subuser = userQueryService.getUserByUsername(username);
         User authuser = userQueryService.getUserByUsername(owner);
-        return LogicSubscribeToUser(subuser,authuser);
+        return LogicSubscribeToUser(subuser, authuser);
 
     }
 
-    private String LogicSubscribeToUser(User subuser, User authuser){
-        if(subuser != null)
-        {
+    private String LogicSubscribeToUser(User subuser, User authuser) {
+        if (subuser != null) {
             if (!authuser.getSubscriptions().contains(subuser)) {
                 authuser.addSubscriptions(subuser);
                 userRepository.save(authuser);
-                log.info("User: "+authuser.getUsername()+ " subscribe to "+subuser.getUsername());
+                log.info("User: " + authuser.getUsername() + " subscribe to " + subuser.getUsername());
                 return "Subscribed";
-            }
-            else {
+            } else {
                 authuser.deleteSubscriptions(subuser);
                 userRepository.save(authuser);
-                log.info("User: "+authuser.getUsername()+ " unsubscribe to "+subuser.getUsername());
+                log.info("User: " + authuser.getUsername() + " unsubscribe to " + subuser.getUsername());
                 return "Unsubscribed";
             }
         } else return "Not found user";
     }
-
-
 
 
 }

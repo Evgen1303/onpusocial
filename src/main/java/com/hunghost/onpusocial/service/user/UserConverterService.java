@@ -21,14 +21,14 @@ public class UserConverterService {
 
     public User convertToEntity(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
-        if(userDTO.getStudygroup() != null)
-        user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
+        if (userDTO.getStudygroup() != null)
+            user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
         return user;
     }
 
-    public  User convertToEntityForUpdate(UserDTO userDTO, User olduser){
+    public User convertToEntityForUpdate(UserDTO userDTO, User olduser) {
         User user = modelMapper.map(userDTO, User.class);
-        if(userDTO.getStudygroup() != null)
+        if (userDTO.getStudygroup() != null)
             user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
         user.setId(olduser.getId());
         user.setAuthorities(olduser.getAuthorities());

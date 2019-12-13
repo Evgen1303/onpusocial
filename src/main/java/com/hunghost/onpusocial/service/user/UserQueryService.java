@@ -36,85 +36,81 @@ public class UserQueryService {
         return userRepository.findAll(pageable);
     }
 
-    public Boolean isFreeUsername(String username){
+    public Boolean isFreeUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             return true;
-        }
-       else
-           return false;
-    }
-
-    public Boolean isFreeEmail(String email){
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            return true;
-        }
-        else
+        } else
             return false;
     }
 
-    public User FindUserByEmail(String email){
+    public Boolean isFreeEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return true;
+        } else
+            return false;
+    }
+
+    public User FindUserByEmail(String email) {
         log.info("Find user by email: " + email);
-         User user =userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user == null) {
             return null;
-        }
-        else
+        } else
             return user;
 
     }
 
-    public User getUserByUsername (String username){
-       User user = userRepository.findByUsername(username);
+    public User getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             return null;
-        }
-        else
-        return user;
+        } else
+            return user;
     }
 
-    public User getAuthUser (){
+    public User getAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = this.getUserByUsername(auth.getName());
         if (user == null) {
             throw new UsernameNotFoundException("not found user");
-        }
-        else
-        return user;
+        } else
+            return user;
     }
 
-    public Collection<User> getSubscriptionAuthUser(){
+    public Collection<User> getSubscriptionAuthUser() {
         User user = this.getAuthUser();
         return user.getSubscriptions();
-            }
+    }
 
-    public Collection<User> getSubscribersAuthUser(){
+    public Collection<User> getSubscribersAuthUser() {
         User user = this.getAuthUser();
         return user.getSubscribers();
     }
 
-    public Collection<User> getSubscriptions(String login){
+    public Collection<User> getSubscriptions(String login) {
 
         User user = this.getUserByUsername(login);
         return user.getSubscriptions();
     }
 
-    public Collection<User> getSubscribers(String login){
+    public Collection<User> getSubscribers(String login) {
 
         User user = this.getUserByUsername(login);
         return user.getSubscribers();
     }
 
-    public Boolean isSubscriptionToUser(String login){
+    public Boolean isSubscriptionToUser(String login) {
         User authuser = this.getAuthUser();
         User subuser = this.getUserByUsername(login);
         return authuser.getSubscriptions().contains(subuser);
     }
-    public Boolean isSubscriptionToUser(String login, String authuserlogin){
+
+    public Boolean isSubscriptionToUser(String login, String authuserlogin) {
         User authuser = this.getUserByUsername(authuserlogin);
         User subuser = this.getUserByUsername(login);
-return authuser.getSubscriptions().contains(subuser);
+        return authuser.getSubscriptions().contains(subuser);
     }
 
 }

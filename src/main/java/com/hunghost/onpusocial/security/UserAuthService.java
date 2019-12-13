@@ -23,6 +23,7 @@ public class UserAuthService implements UserDetailsService {
 
     private UserRepository userRepository;
     private static final Logger log = LogManager.getLogger(UserAuthService.class);
+
     @Autowired
     public UserAuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -31,16 +32,17 @@ public class UserAuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Find user by login: "+ username);
+        log.info("Find user by login: " + username);
         User user = userRepository.findByUsername(username);
-        if (user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(),
-                mapRolesToAuthorities(user.getAuthorities()));    }
+                mapRolesToAuthorities(user.getAuthorities()));
+    }
 
-        private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
@@ -48,18 +50,17 @@ public class UserAuthService implements UserDetailsService {
     }
 
 
-    public UserDetails loadUserByLoginAndPass (String login, String password) throws UsernameNotFoundException{
+    public UserDetails loadUserByLoginAndPass(String login, String password) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(login);
-        if (user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        if(new BCryptPasswordEncoder().matches(password,user.getPassword())== true){
+        if (new BCryptPasswordEncoder().matches(password, user.getPassword()) == true) {
 
-            log.info("Password^ "+password+" = " + user.getPassword());
+            log.info("Password^ " + password + " = " + user.getPassword());
             return null;
 
-        }
-        else throw new UsernameNotFoundException("Invalid username or password.");
+        } else throw new UsernameNotFoundException("Invalid username or password.");
 
     }
 }

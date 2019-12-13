@@ -64,6 +64,7 @@ public class UserController {
     public ResponseEntity<User> putUser(@PathVariable String login, @RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userCommandService.updateUser(login, userDTO));
     }
+
     @GetMapping("/isfreeusername/{username}")
     public Boolean isFreeUsername(@PathVariable String username) {
         return userQueryService.isFreeUsername(username);
@@ -80,11 +81,12 @@ public class UserController {
     }
 
     @GetMapping("/{login}/subscriptions")
-    public Collection<User> getSubscriptions (@PathVariable String login){
+    public Collection<User> getSubscriptions(@PathVariable String login) {
         return userQueryService.getSubscriptions(login);
     }
+
     @GetMapping("/{login}/subscribers")
-    public Collection<User> getSubscribers(@PathVariable String login){
+    public Collection<User> getSubscribers(@PathVariable String login) {
         return userQueryService.getSubscribers(login);
     }
 
