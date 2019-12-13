@@ -22,15 +22,15 @@ public class Post {
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "studygroup_id", nullable = true)
+    @JoinColumn(name = "studygroup_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Studygroup studygroup;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "kafedra_id", nullable = true)
+    @JoinColumn(name = "kafedra_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Kafedra kafedra;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "faculty_id", nullable = true)
+    @JoinColumn(name = "faculty_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Faculty faculty;
     private Boolean subscribers;

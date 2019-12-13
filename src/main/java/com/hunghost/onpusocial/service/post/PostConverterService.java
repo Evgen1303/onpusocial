@@ -35,8 +35,11 @@ public class PostConverterService {
     public Post convertToEntity(PostDTO postDTO) {
         Post post = modelMapper.map(postDTO, Post.class);
         post.setUser(userQueryService.getUserById(postDTO.getUser()));
+        if (postDTO.getStudygroup() != null)
         post.setStudygroup(studyGroupQueryService.getStudyGroupById(postDTO.getStudygroup()));
+        if (postDTO.getKafedra() != null)
         post.setKafedra(kafedraQueryService.getKafedraById(postDTO.getKafedra()));
+        if (postDTO.getFaculty() != null)
         post.setFaculty(facultyQueryService.getKafedraById(postDTO.getFaculty()));
         return post;
     }
