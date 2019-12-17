@@ -70,7 +70,7 @@ public class PostController {
     @GetMapping("/user/{login}")
     public Page<Post> getPostsbyUserLogin(@PathVariable String login,
                                           @PageableDefault(size = DEFAULT_PAGE_SIZE)
-                                          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD, direction = Sort.Direction.DESC)})
                                           Pageable pageable) {
         return postQueryService.getPostByUserLogin(login, pageable);
     }
