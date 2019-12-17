@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class PostController {
     @GetMapping
     public Page<Post> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
-            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD, direction = Sort.Direction.DESC)})
                     Pageable pageable
     ) {
         return postQueryService.getPage(pageable);
@@ -74,6 +75,13 @@ public class PostController {
         return postQueryService.getPostByUserLogin(login, pageable);
     }
 
+    @GetMapping("/authuser")
+    public Page<Post> getPostsForUser(
+                                          @PageableDefault(size = DEFAULT_PAGE_SIZE)
+                                          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                                  Pageable pageable) {
+        return postQueryService.getPostsForUser(pageable);
+    }
 
 
 

@@ -34,8 +34,8 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Faculty faculty;
     private Boolean subscribers;
+    private Boolean alluser;
     private Long date;
-
 
     @Override
     public String toString() {
@@ -48,8 +48,17 @@ public class Post {
                 ", kafedra=" + kafedra +
                 ", faculty=" + faculty +
                 ", subscribers=" + subscribers +
+                ", alluser=" + alluser +
                 ", date=" + date +
                 '}';
+    }
+
+    public Boolean getAlluser() {
+        return alluser;
+    }
+
+    public void setAlluser(Boolean alluser) {
+        this.alluser = alluser;
     }
 
     public Long getId() {

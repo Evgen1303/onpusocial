@@ -30,6 +30,12 @@ public class PostQueryService {
         return postRepository.findByUserUsername(username, pageable);
     }
 
+    public Page<Post> getPostsForUser(Pageable pageable){
+
+        return postRepository.findByStudygroup_Id(pageable);
+    }
+
+
 
 
 }
