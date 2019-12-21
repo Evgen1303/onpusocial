@@ -32,7 +32,6 @@ public class UserAuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Find user by login: " + username);
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
@@ -55,7 +54,7 @@ public class UserAuthService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        if (new BCryptPasswordEncoder().matches(password, user.getPassword()) == true) {
+        if (new BCryptPasswordEncoder().matches(password, user.getPassword())) {
 
             log.info("Password^ " + password + " = " + user.getPassword());
             return null;

@@ -31,15 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/login",
+                .antMatchers(HttpMethod.GET,
                         "/users/isfreeusername/{username}",
                         "/users/isfreeemail/{email}",
-                        "/",
                         "/authusers",
                         "/users/getbyemail/{email}",
                         "/users/{login}"
                 ).permitAll()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/users", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
@@ -56,16 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     }
-//
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {

@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.controller;
 
+import com.hunghost.onpusocial.dto.AuthorizationDTO;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.security.CustomAuthenticationManager;
 import com.hunghost.onpusocial.service.user.UserCommandService;
@@ -38,11 +39,11 @@ public class AuthController {
         this.userCommandService = userCommandService;
     }
 
-    @GetMapping("login")
+    @PostMapping("login")
     @ResponseBody
-    public Boolean login(@RequestParam String login, @RequestParam String password) {
-        log.info("Request /login check");
-        return customAuthenticationManager.login(login, password);
+    public Boolean login(@RequestBody AuthorizationDTO authorizationDTO) {
+
+        return customAuthenticationManager.login(authorizationDTO.getLogin(), authorizationDTO.getPass());
     }
 
     @GetMapping("authuser")
