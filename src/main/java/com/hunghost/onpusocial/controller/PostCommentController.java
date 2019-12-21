@@ -20,9 +20,9 @@ public class PostCommentController {
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final String DEFAULT_SORT_FIELD = "id";
 
-    PostCommentQueryService postCommentQueryService;
-    PostCommentCommandService postCommentCommandService;
-    PostCommentConverterService postCommentConverterService;
+    private PostCommentQueryService postCommentQueryService;
+    private PostCommentCommandService postCommentCommandService;
+    private PostCommentConverterService postCommentConverterService;
 
     @Autowired
     public PostCommentController(PostCommentQueryService postCommentQueryService, PostCommentCommandService postCommentCommandService, PostCommentConverterService postCommentConverterService) {
@@ -31,7 +31,7 @@ public class PostCommentController {
         this.postCommentConverterService = postCommentConverterService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public Page<PostComment> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
             @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
@@ -42,6 +42,15 @@ public class PostCommentController {
     @GetMapping("/{id}")
     public PostCommentDTO getPostComment(@PathVariable Long id) {
         return postCommentConverterService.convertToDto(postCommentQueryService.getPostCommentById(id));
+    }
+
+    @GetMapping
+    public Page<PostComment> getPageCommentsByPost(
+            @PageableDefault(size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                    Pageable pageable, @RequestParam Long postid
+    ) {
+        return postCommentQueryService.getCommentsByPostid(pageable,postid);
     }
 
     @PostMapping

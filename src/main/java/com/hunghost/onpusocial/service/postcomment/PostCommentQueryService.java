@@ -24,4 +24,9 @@ public class PostCommentQueryService {
     public Page<PostComment> getPage(Pageable pageable) {
         return postCommentRepository.findAll(pageable);
     }
+
+    public Page<PostComment> getCommentsByPostid(Pageable pageable,Long id){
+
+        return  postCommentRepository.findByPost_Id(id, pageable);
+    }
 }
