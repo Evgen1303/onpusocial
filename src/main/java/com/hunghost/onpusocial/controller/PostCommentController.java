@@ -57,7 +57,7 @@ public class PostCommentController {
             @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
                     Pageable pageable, @RequestParam Long postid
     ) {
-        log.info("Получены комменты к посту: "+postid);
+        log.info("Получены комменты к посту: "+postid + "Странтина номер: "+pageable.getPageNumber());
         return postCommentQueryService.getCommentsByPostid(pageable,postid);
     }
 
