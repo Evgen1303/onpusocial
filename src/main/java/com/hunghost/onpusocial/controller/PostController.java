@@ -5,6 +5,9 @@ import com.hunghost.onpusocial.entity.Post;
 import com.hunghost.onpusocial.service.post.PostCommandService;
 import com.hunghost.onpusocial.service.post.PostConverterService;
 import com.hunghost.onpusocial.service.post.PostQueryService;
+import com.hunghost.onpusocial.service.user.UserCommandService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -27,7 +30,7 @@ public class PostController {
     private PostQueryService postQueryService;
     private PostCommandService postCommandService;
     private PostConverterService postConverterService;
-
+    private static final Logger log = LogManager.getLogger(UserCommandService.class);
     @Autowired
     public PostController(PostQueryService postQueryService, PostCommandService postCommandService
             , PostConverterService postConverterService
@@ -42,10 +45,13 @@ public class PostController {
             @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD, direction = Sort.Direction.DESC)})
                     Pageable pageable
     ) {
+        log.info("Получена страница с поостами № " +pageable.getPageNumber());
         return postQueryService.getPage(pageable);
+
     }
     @GetMapping("/{id}")
     public Post getPost(@PathVariable Long id) {
+        log.info("Получен пост ID: "+id);
         return postQueryService.getPostById(id);
     }
 
@@ -53,17 +59,20 @@ public class PostController {
     public Post createPost(@RequestBody PostDTO postDTO) {
         Post post = postConverterService.convertToEntity(postDTO);
         postCommandService.savePost(post);
+        log.info("Создан пост: "+post.getId());
         return post;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Post> deletePost(@PathVariable Long id) {
         postCommandService.deletePost(id);
+        log.info("Удалён пост: "+id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Post> putPost(@PathVariable Long id, @RequestBody PostDTO postDTO) {
+        log.info("Изменён пост: "+id);
         return ResponseEntity.ok(postCommandService.updatePost(id, postConverterService.convertToEntity(postDTO)));
     }
 
@@ -72,6 +81,7 @@ public class PostController {
                                           @PageableDefault(size = DEFAULT_PAGE_SIZE)
                                           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD, direction = Sort.Direction.DESC)})
                                           Pageable pageable) {
+        log.info("Получена страница постов №" + pageable.getPageNumber() + " Для пользователя " + login);
         return postQueryService.getPostByUserLogin(login, pageable);
     }
 
@@ -80,6 +90,7 @@ public class PostController {
                                           @PageableDefault(size = DEFAULT_PAGE_SIZE)
                                           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
                                                   Pageable pageable) {
+        log.info("Получена страница постов №" + pageable.getPageNumber() + " Для авторизированного пользователя ");
         return postQueryService.getPostsForUser(pageable);
     }
 
