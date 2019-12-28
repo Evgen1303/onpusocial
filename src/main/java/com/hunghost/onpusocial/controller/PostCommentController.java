@@ -5,6 +5,9 @@ import com.hunghost.onpusocial.entity.PostComment;
 import com.hunghost.onpusocial.service.postcomment.PostCommentCommandService;
 import com.hunghost.onpusocial.service.postcomment.PostCommentConverterService;
 import com.hunghost.onpusocial.service.postcomment.PostCommentQueryService;
+import com.hunghost.onpusocial.service.user.UserCommandService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +27,8 @@ public class PostCommentController {
     private PostCommentCommandService postCommentCommandService;
     private PostCommentConverterService postCommentConverterService;
 
+    private static final Logger log = LogManager.getLogger(UserCommandService.class);
+
     @Autowired
     public PostCommentController(PostCommentQueryService postCommentQueryService, PostCommentCommandService postCommentCommandService, PostCommentConverterService postCommentConverterService) {
         this.postCommentQueryService = postCommentQueryService;
@@ -37,10 +42,12 @@ public class PostCommentController {
             @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
                     Pageable pageable
     ) {
+        log.info("Получены все комменты");
         return postCommentQueryService.getPage(pageable);
-    }
+            }
     @GetMapping("/{id}")
     public PostCommentDTO getPostComment(@PathVariable Long id) {
+        log.info("Получен комент ID: "+id);
         return postCommentConverterService.convertToDto(postCommentQueryService.getPostCommentById(id));
     }
 
@@ -50,6 +57,7 @@ public class PostCommentController {
             @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
                     Pageable pageable, @RequestParam Long postid
     ) {
+        log.info("Получены комменты к посту: "+postid);
         return postCommentQueryService.getCommentsByPostid(pageable,postid);
     }
 
@@ -57,17 +65,20 @@ public class PostCommentController {
     public PostComment createPostComment(@RequestBody PostCommentDTO postCommentDTO) {
         PostComment postComment = postCommentConverterService.convertToEntity(postCommentDTO);
         postCommentCommandService.savePostComment(postComment);
+        log.info("Создан коммент: "+postComment.getId()+ " к посту " + postComment.getPost().getId());
         return postComment;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<PostComment> deletePostComment(@PathVariable Long id) {
         postCommentCommandService.deletePostComment(id);
+        log.info("Удалён коммент "+ id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PostComment> putPostComment(@PathVariable Long id, @RequestBody PostCommentDTO postCommentDTO) {
+        log.info("Изменён коммент "+ id);
         return ResponseEntity.ok(postCommentCommandService.updatePostComment(id, postCommentConverterService.convertToEntity(postCommentDTO)));
     }
 }
