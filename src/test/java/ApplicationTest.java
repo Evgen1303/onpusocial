@@ -31,7 +31,7 @@ public class ApplicationTest {
 
 
     @Test
-    public void testConverterService() throws Exception {
+    public void userConverterService_ConvertToEntity_Test() throws Exception {
         UserDTO userDTO = new UserDTO(
                 "testName",
                 "testLastName",
@@ -47,14 +47,11 @@ public class ApplicationTest {
         );
 
         User user = userConverterService.convertToEntity(userDTO);
-
         assertEquals("testlogin",user.getUsername());
         assertEquals("testpassword", user.getPassword());
     }
-
-
     @Test
-    public void testSaveCommand() throws Exception {
+    public void userCommandService_SaveUser_Test() throws Exception {
         UserDTO userdto = new UserDTO(
                 "Viktor",
                 "Sapojnyak",
@@ -74,19 +71,15 @@ public class ApplicationTest {
     }
 
     @Test
-    public void FindUserInDB() throws Exception {
+    public void userRepository_FindUser_Test() throws Exception {
         User user = userRepository.findByUsername("login");
         assertEquals("login", user.getUsername());
       assertTrue(passwordEncoder.matches("pass",user.getPassword()));
     }
 
     @Test
-    public void SubscribeOnUser()throws Exception{
+    public void userCommandService_SubscribeToUser_Test()throws Exception{
        String answer = userCommandService.SubscribeToUser("sap","login");
         assertEquals("Subscribed",answer);
     }
-
-
-
-
 }
