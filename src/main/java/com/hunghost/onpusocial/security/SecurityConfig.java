@@ -25,9 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserAuthService userAuthService;
 
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
+
 
         http
                 .authorizeRequests()
@@ -44,14 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .maximumSessions(1).sessionRegistry(sessionRegistry())
                 .and().and()
-                .httpBasic()
-                .and()
                 .addFilterBefore(new WebSecurityCorsFilter(), ChannelProcessingFilter.class)
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler())
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .and()
                 .csrf().disable()
                 .formLogin().disable();
+                http.httpBasic().disable();
+
 
 
     }
