@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger log = LogManager.getLogger(SecurityConfig.class);
@@ -35,7 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/isfreeemail/{email}",
                         "/authusers",
                         "/users/getbyemail/{email}",
-                        "/users/{login}"
+                        "/users/{login}",
+                        "/ws",
+                        "/ws/**",
+                        "/app",
+                        "/topic"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/users", "/login").permitAll()
                 .anyRequest().authenticated()
