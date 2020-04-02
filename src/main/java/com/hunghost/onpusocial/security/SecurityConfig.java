@@ -37,7 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/isfreeemail/{email}",
                         "/authusers",
                         "/users/getbyemail/{email}",
-                        "/users/{login}",
+                        "/users/{login}"
+                ).permitAll()
+                .antMatchers(
                         "/ws",
                         "/ws/**",
                         "/app",
