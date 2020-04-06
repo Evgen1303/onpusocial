@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/topic"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/users", "/login").permitAll()
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .maximumSessions(1).sessionRegistry(sessionRegistry())
