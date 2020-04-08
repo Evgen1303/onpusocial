@@ -1,7 +1,7 @@
 status = error
 name = PropertiesConfig
 
-#Make sure to change log file path as per your need
+#Make sure to change log serverFile path as per your need
 property.filename = debug.log
 
 filters = threshold
