@@ -81,14 +81,11 @@ public class FileLoadService {
         serverFile.setFiletype(mediaType.getType());
         serverFile.setFileowner(user);
         fileCommandService.saveFile(serverFile);
-
+        serverFile.setFilename(serverFile.getId()+serverFile.getFilename());
+        fileCommandService.saveFile(serverFile);
         File file = new File(catalog+"/"+serverFile.getFilename());
         multipartFile.transferTo(file);
-        log.info(String.format("File name '%s' uploaded successfully.", multipartFile.getOriginalFilename()));
-
-
-
+        log.info(String.format("Hello, File name '%s' uploaded successfully.", multipartFile.getOriginalFilename()));
         return ResponseEntity.ok().build();
     }
-
 }

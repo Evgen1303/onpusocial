@@ -22,5 +22,6 @@ public class FileCommandService {
         if(serverFile.getFilename()!=null){
             fileRepository.save(serverFile);
         }
+
     }
 }

@@ -13,7 +13,6 @@ public class ServerFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     @NotNull
     private String filename;
 
