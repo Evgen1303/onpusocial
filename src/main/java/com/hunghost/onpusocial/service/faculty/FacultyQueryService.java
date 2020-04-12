@@ -18,7 +18,7 @@ public class FacultyQueryService {
         this.facultyRepository = facultyRepository;
     }
 
-    public Faculty getKafedraById(Long id) {
+    public Faculty getFacultyById(Long id) {
         return facultyRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 

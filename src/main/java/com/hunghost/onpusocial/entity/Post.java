@@ -85,8 +85,8 @@ public class Post {
         this.content = content;
     }
 
-    public String getUser() {
-        return user.getUsername();
+    public Long getUser() {
+        return user.getId();
     }
 
     public void setUser(User user) {

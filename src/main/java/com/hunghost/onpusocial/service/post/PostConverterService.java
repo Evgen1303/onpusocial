@@ -40,7 +40,7 @@ public class PostConverterService {
         if (postDTO.getKafedra() != null)
         post.setKafedra(kafedraQueryService.getKafedraById(postDTO.getKafedra()));
         if (postDTO.getFaculty() != null)
-        post.setFaculty(facultyQueryService.getKafedraById(postDTO.getFaculty()));
+        post.setFaculty(facultyQueryService.getFacultyById(postDTO.getFaculty()));
         return post;
     }
 }
