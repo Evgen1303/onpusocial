@@ -25,6 +25,10 @@ public class KafedraQueryService {
         return kafedraRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
+    public Page<Kafedra> getPageByFacultyId(Long id,Pageable pageable){
+        return kafedraRepository.findAllByFaculty_Id(id,pageable);
+    }
+
     public Page<Kafedra> getPage(Pageable pageable) {
         return kafedraRepository.findAll(pageable);
     }

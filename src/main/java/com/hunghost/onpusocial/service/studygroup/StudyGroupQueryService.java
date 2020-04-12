@@ -25,5 +25,8 @@ public class StudyGroupQueryService {
     public Page<Studygroup> getPage(Pageable pageable) {
         return studygroupRepository.findAll(pageable);
     }
+    public Page<Studygroup> getPageByKafedraId(Pageable pageable, Long id){
+        return studygroupRepository.findAllByKafedra_Id(id,pageable);
+    }
 
 }

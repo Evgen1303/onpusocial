@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin
@@ -38,6 +39,14 @@ public class KafedraController {
                     Pageable pageable
     ) {
         return kafedraQueryService.getPage(pageable);
+    }
+    @GetMapping("/faculty")
+    public Page<Kafedra> getPagesByFacultyId(
+            @PageableDefault(size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+            @RequestParam Long facultyid, Pageable pageable
+    ) {
+        return kafedraQueryService.getPageByFacultyId(facultyid, pageable);
     }
 
     @GetMapping("/{id}")

@@ -41,6 +41,14 @@ StudygroupController {
     ) {
         return studyGroupQueryService.getPage(pageable);
     }
+    @GetMapping("/kafedra")
+    public Page<Studygroup> getPagesByFacultyId(
+            @PageableDefault(size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+            @RequestParam Long kafedraid, Pageable pageable
+    ) {
+        return studyGroupQueryService.getPageByKafedraId(pageable, kafedraid);
+    }
 
     @GetMapping("/{id}")
     public Studygroup getStudygroup(@PathVariable Long id) {
