@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -37,6 +38,9 @@ public class Post {
     private Boolean alluser;
     private Long date;
     private Long userIdfield;
+    @OneToMany(mappedBy = "post")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<PostComment> postCommentSet;
 
     @Override
     public String toString() {
@@ -53,6 +57,14 @@ public class Post {
                 ", date=" + date +
                 ", userIdfield=" + userIdfield +
                 '}';
+    }
+
+    public Set<PostComment> getPostCommentSet() {
+        return postCommentSet;
+    }
+
+    public void setPostCommentSet(Set<PostComment> postCommentSet) {
+        this.postCommentSet = postCommentSet;
     }
 
     public Long getUserIdfield() {

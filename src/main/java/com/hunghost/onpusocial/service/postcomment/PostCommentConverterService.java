@@ -24,7 +24,7 @@ public class PostCommentConverterService {
         PostCommentDTO postCommentDTO = new PostCommentDTO();
 
         postCommentDTO.setId(postComment.getId());
-        postCommentDTO.setPost(postComment.getPost().getId());
+        postCommentDTO.setPost(postComment.getPost());
         postCommentDTO.setUser(postComment.getUser().getId());
         postCommentDTO.setContent(postComment.getContent());
         return postCommentDTO;

@@ -65,7 +65,7 @@ public class PostCommentController {
     public PostComment createPostComment(@RequestBody PostCommentDTO postCommentDTO) {
         PostComment postComment = postCommentConverterService.convertToEntity(postCommentDTO);
         postCommentCommandService.savePostComment(postComment);
-        log.info("Создан коммент: "+postComment.getId()+ " к посту " + postComment.getPost().getId());
+        log.info("Создан коммент: "+postComment.getId()+ " к посту " + postComment.getPost());
         return postComment;
     }
 

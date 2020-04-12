@@ -56,8 +56,8 @@ public class PostComment {
         this.user = user;
     }
 
-    public Post getPost() {
-        return post;
+    public Long getPost() {
+        return post.getId();
     }
 
     public void setPost(Post post) {

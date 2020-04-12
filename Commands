@@ -96,4 +96,6 @@ GET     /departments/faculty?facultyid={facultyid}  Long  facultyid     Page<Kaf
                                                                                            конкретному факультету
 ________________________________________________________________________________________________________________________
 GET     /studygroups/kafedra?kafedraid={kafedraid}  Long  kafedraid     Page<Studygroup>   Получить список групп, по
-                                                                                           кафедре
+________________________________________________________________________________________________________________________
+POST    /files/upload                               MultipartFile file
+                                                    String login
