@@ -36,6 +36,7 @@ public class Post {
     private Boolean subscribers;
     private Boolean alluser;
     private Long date;
+    private Long userIdfield;
 
     @Override
     public String toString() {
@@ -50,7 +51,16 @@ public class Post {
                 ", subscribers=" + subscribers +
                 ", alluser=" + alluser +
                 ", date=" + date +
+                ", userIdfield=" + userIdfield +
                 '}';
+    }
+
+    public Long getUserIdfield() {
+        return user.getId();
+    }
+
+    public void setUserIdfield(Long userIdfield) {
+        this.userIdfield = userIdfield;
     }
 
     public Boolean getAlluser() {
@@ -85,8 +95,8 @@ public class Post {
         this.content = content;
     }
 
-    public Long getUser() {
-        return user.getId();
+    public String getUser() {
+        return this.user.getUsername();
     }
 
     public void setUser(User user) {
@@ -132,4 +142,5 @@ public class Post {
     public void setDate(Long date) {
         this.date = date;
     }
+
 }
