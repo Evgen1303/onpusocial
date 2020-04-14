@@ -37,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/isfreeemail/{email}",
                         "/authusers",
                         "/users/getbyemail/{email}",
-                        "/users/{login}"
+                        "/users/{login}",
+                        "/departments/faculty?facultyid={facultyid}"
                 ).permitAll()
                 .antMatchers(
                         "/ws",
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/topic"
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/users", "/login").permitAll()
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .maximumSessions(1).sessionRegistry(sessionRegistry())
