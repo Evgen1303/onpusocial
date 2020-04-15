@@ -104,3 +104,10 @@ ________________________________________________________________________________
 GET     users/{login}/subscriptions                 String login        Collection<User>   Получить список подписок пользователя по логину
 ________________________________________________________________________________________________________________________
 GET     users/{login}/subscribers                 String login          Collection<User>   Получить список подписчиков пользователя по логину
+
+http://localhost:9005/files/users вывести все файлы всех юзеров
+http://localhost:9005/files/users/3 - вот так конкретного юзера по айди
+http://localhost:9005/files/downloadasresource?fileName=13logintest2.jpg&login=login
+http://localhost:9005/files/download?fileName=1logintest2.jpg&login=login
+POST http://localhost:9005/files/upload file: {file}
+                                        login: {login}
