@@ -62,6 +62,17 @@ public class FileLoadService {
                 .body(resource);
         return responseEntity;
     }
+
+    public File downloadFileAsFile(String fileName, String login) throws IOException {
+        File file = new File(DIRECTORY + "/"+login+"/" +fileName);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        if(!resource.exists()){
+            throw new MyFileNotFoundException("File not found " + fileName);
+        }
+
+        return file;
+    }
+
     public byte[] downloadFileAsByte(String fileName, String login) throws IOException {
         File file = new File(DIRECTORY + "/"+login+"/" +fileName);
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));

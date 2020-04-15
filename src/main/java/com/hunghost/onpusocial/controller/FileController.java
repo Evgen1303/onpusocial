@@ -16,7 +16,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -54,8 +57,16 @@ public class FileController {
         return fileLoadService.downloadFileAsResource(fileName,login,request);
     }
     @GetMapping("/downloadasbyterow")
-    public  @ResponseBody byte[] downloadFileAsByte(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login) throws IOException {
-        return fileLoadService.downloadFileAsByte(fileName,login);
+    public  @ResponseBody Blob downloadFileAsByte(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login) throws IOException, SQLException {
+        byte[] bytes = fileLoadService.downloadFileAsByte(fileName,login);
+        Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+        return blob;
+    }
+
+    @GetMapping("/downloadasfile")
+    public  @ResponseBody
+    File downloadFileAsFile(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login) throws IOException {
+        return fileLoadService.downloadFileAsFile(fileName,login);
     }
 
     @GetMapping("/users")
