@@ -53,6 +53,10 @@ public class FileController {
     public ResponseEntity<Resource> downloadFileAsResource(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login, HttpServletRequest request) throws IOException {
         return fileLoadService.downloadFileAsResource(fileName,login,request);
     }
+    @GetMapping("/downloadasbyterow")
+    public  @ResponseBody byte[] downloadFileAsByte(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login) throws IOException {
+        return fileLoadService.downloadFileAsByte(fileName,login);
+    }
 
     @GetMapping("/users")
     public List<ServerFile> getFilesByUsers() {

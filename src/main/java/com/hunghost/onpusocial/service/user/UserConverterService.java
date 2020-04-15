@@ -27,13 +27,21 @@ public class UserConverterService {
     }
 
     public User convertToEntityForUpdate(UserDTO userDTO, User olduser) {
-        User user = modelMapper.map(userDTO, User.class);
+
+        User user = olduser;
+
         if (userDTO.getStudygroup() != null)
             user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
-        user.setId(olduser.getId());
-        user.setAuthorities(olduser.getAuthorities());
-        user.setSubscribers(olduser.getSubscribers());
-        user.setSubscriptions(olduser.getSubscriptions());
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setBirthday(userDTO.getBirthday());
+        user.setEmail(userDTO.getEmail());
+        user.setPhone(userDTO.getPhone());
+        user.setDescription(userDTO.getDescription());
+        user.setPhoto(userDTO.getPhoto());
+        user.setStarosta(userDTO.getStarosta());
+        user.setUsername(userDTO.getUsername());
         return user;
     }
 

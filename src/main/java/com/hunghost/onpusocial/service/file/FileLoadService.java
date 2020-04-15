@@ -1,10 +1,9 @@
 package com.hunghost.onpusocial.service.file;
 
-
-
 import com.hunghost.onpusocial.entity.ServerFile;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.exception.MyFileNotFoundException;
+import com.hunghost.onpusocial.exception.ResourceNotFoundException;
 import com.hunghost.onpusocial.service.user.UserCommandService;
 import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.apache.logging.log4j.LogManager;
@@ -25,8 +24,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -65,8 +62,15 @@ public class FileLoadService {
                 .body(resource);
         return responseEntity;
     }
-
-
+    public byte[] downloadFileAsByte(String fileName, String login) throws IOException {
+        File file = new File(DIRECTORY + "/"+login+"/" +fileName);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        if(!resource.exists()){
+            throw new MyFileNotFoundException("File not found " + fileName);
+        }
+        byte[] bimage = new byte[resource.getInputStream().available()];
+        return bimage;
+    }
     public ResponseEntity<Resource> downloadFileAsResource(String fileName, String login, HttpServletRequest request) throws IOException {
         File file = new File(DIRECTORY + "/"+login+"/" +fileName);
         Path filePath = file.toPath();
@@ -103,7 +107,7 @@ public class FileLoadService {
         }
         User user = userQueryService.getUserByUsername(login);
         if(user == null){
-            // throw exception
+            throw new ResourceNotFoundException("User not found");
         }
         MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, multipartFile.getOriginalFilename());
 
