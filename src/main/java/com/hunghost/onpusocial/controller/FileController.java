@@ -63,7 +63,7 @@ public class FileController {
         return blob;
     }
 
-    @GetMapping("/downloadasfile")
+    @GetMapping("/downloadasfile") //
     public  @ResponseBody
     File downloadFileAsFile(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login) throws IOException {
         return fileLoadService.downloadFileAsFile(fileName,login);
