@@ -1,23 +1,26 @@
 package com.hunghost.onpusocial.service.file;
 
+import com.hunghost.onpusocial.entity.ServerFile;
 import com.hunghost.onpusocial.repositories.FileRepository;
+import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 import java.util.List;
 
 @Service
 public class FileQueryService {
     private FileRepository fileRepository;
+    private UserQueryService userQueryService;
+
     @Autowired
-    public FileQueryService(FileRepository fileRepository) {
+    public FileQueryService(FileRepository fileRepository, UserQueryService userQueryService) {
         this.fileRepository = fileRepository;
+        this.userQueryService = userQueryService;
     }
-
-    public List<File> getFilesByUserId(Long userId){
-
-
-        return null;
+    public List<ServerFile> getFilesByUserId(Long userId){
+        return fileRepository.findAllByFileowner(userQueryService.getUserById(userId));
+    }
+    public List<ServerFile> getFilesByUsers(){
+        return fileRepository.findAll();
     }
 }

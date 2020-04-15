@@ -30,6 +30,9 @@ public class UserDTO {
                 '}';
     }
 
+    public UserDTO() {
+    }
+
     public UserDTO(String firstName, String lastName, Long birthday, String email, String phone, String description, String photo, Long studygroup, Boolean starosta, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
