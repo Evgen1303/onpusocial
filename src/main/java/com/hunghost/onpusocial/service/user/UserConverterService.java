@@ -31,7 +31,7 @@ public class UserConverterService {
         User user = olduser;
 
         if (userDTO.getStudygroup() != null)
-            user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
+        user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
 
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

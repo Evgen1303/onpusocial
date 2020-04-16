@@ -2,6 +2,7 @@ package com.hunghost.onpusocial.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hunghost.onpusocial.annotation.Phone;
+import javafx.geometry.Pos;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -39,10 +40,11 @@ public class User {
     private String description;
     private String photo;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "studygroup_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Studygroup studygroup;
+
     private Boolean starosta;
 
     @Column(unique = true)
@@ -66,6 +68,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "channel_id")},
             inverseJoinColumns = {@JoinColumn(name = "subscriber_id")}
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<User> subscribers;
 
 
@@ -76,7 +79,20 @@ public class User {
             joinColumns = {@JoinColumn(name = "subscriber_id")},
             inverseJoinColumns = {@JoinColumn(name = "channel_id")}
     )
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<User> subscriptions = new HashSet<>();
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Post> postList;
+
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
+    }
 
     public User(String firstName, String lastName, Long birthday, @NotNull @Email(message = "Not suitable format for Email") String email, String phone, String description, String photo, Studygroup studygroup, Boolean starosta, @NotNull String username, String password, Collection<Role> authorities) {
         this.firstName = firstName;
@@ -118,12 +134,20 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
-                ", studygroup=" + studygroup +
+                //", studygroup=" + studygroup +
                 ", starosta=" + starosta +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", authorities=" + authorities +
                 '}';
+    }
+
+    public Studygroup getStudygroup() {
+        return studygroup;
+    }
+
+    public void setStudygroup(Studygroup studygroup) {
+        this.studygroup = studygroup;
     }
 
     public User() {
@@ -191,14 +215,6 @@ public class User {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public Studygroup getStudygroup() {
-        return studygroup;
-    }
-
-    public void setStudygroup(Studygroup studygroup) {
-        this.studygroup = studygroup;
     }
 
     public Boolean getStarosta() {

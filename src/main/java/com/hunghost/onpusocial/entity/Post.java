@@ -17,27 +17,32 @@ public class Post {
     private String namePost;
     @Column(name="content")
     private String content;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "studygroup_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Studygroup studygroup;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "kafedra_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Kafedra kafedra;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "faculty_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Faculty faculty;
+
     private Boolean subscribers;
     private Boolean alluser;
     private Long date;
     private Long userIdfield;
+
     @OneToMany(mappedBy = "post")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<PostComment> postCommentSet;

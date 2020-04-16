@@ -2,8 +2,8 @@ package com.hunghost.onpusocial.entity;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "studygroup")
@@ -14,12 +14,27 @@ public class Studygroup {
     private Long id;
     private String nameGroup;
     private String descriptionGroup;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "kafedra_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Kafedra kafedra;
     private Long course;
     private Long stream;
+
+    @OneToMany(mappedBy = "studygroup")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private List<User> userList;
+
+    public Integer getUserList() {
+        return userList.size();
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
+    public Studygroup() {
+    }
 
     @Override
     public String toString() {
