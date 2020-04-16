@@ -2,7 +2,6 @@ package com.hunghost.onpusocial.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hunghost.onpusocial.annotation.Phone;
-import javafx.geometry.Pos;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -85,6 +84,18 @@ public class User {
     @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Post> postList;
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<PostComment> postCommentList;
+
+    public Integer getPostCommentList() {
+        return postCommentList.size();
+    }
+
+    public void setPostCommentList(List<PostComment> postCommentList) {
+        this.postCommentList = postCommentList;
+    }
 
     public List<Post> getPostList() {
         return postList;

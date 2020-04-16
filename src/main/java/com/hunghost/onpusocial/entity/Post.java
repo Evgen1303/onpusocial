@@ -47,6 +47,14 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<PostComment> postCommentSet;
 
+    public Integer getPostCommentSet() {
+        return postCommentSet.size();
+    }
+
+    public void setPostCommentSet(Set<PostComment> postCommentSet) {
+        this.postCommentSet = postCommentSet;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -64,13 +72,6 @@ public class Post {
                 '}';
     }
 
-    public Set<PostComment> getPostCommentSet() {
-        return postCommentSet;
-    }
-
-    public void setPostCommentSet(Set<PostComment> postCommentSet) {
-        this.postCommentSet = postCommentSet;
-    }
 
     public Long getUserIdfield() {
         return user.getId();

@@ -2,8 +2,6 @@ package com.hunghost.onpusocial;
 
         import com.hunghost.onpusocial.entity.*;
         import com.hunghost.onpusocial.repositories.*;
-        import com.hunghost.onpusocial.service.user.UserCommandService;
-        import javafx.geometry.Pos;
         import org.apache.logging.log4j.LogManager;
         import org.apache.logging.log4j.Logger;
         import org.springframework.beans.factory.annotation.Autowired;
