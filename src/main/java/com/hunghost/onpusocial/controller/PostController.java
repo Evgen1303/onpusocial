@@ -47,7 +47,6 @@ public class PostController {
     ) {
         log.info("Получена страница с поостами № " +pageable.getPageNumber());
         return postQueryService.getPage(pageable);
-
     }
     @GetMapping("/{id}")
     public Post getPost(@PathVariable Long id) {

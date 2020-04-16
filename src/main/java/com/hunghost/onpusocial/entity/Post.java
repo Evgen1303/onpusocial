@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -45,6 +46,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Set<PostComment> postCommentSet;
 
     public Integer getPostCommentSet() {
