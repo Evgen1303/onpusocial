@@ -2,17 +2,22 @@ package com.hunghost.onpusocial.service.user;
 
 import com.hunghost.onpusocial.dto.UserDTO;
 import com.hunghost.onpusocial.entity.User;
+import com.hunghost.onpusocial.service.file.FileQueryService;
 import com.hunghost.onpusocial.service.studygroup.StudyGroupQueryService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserConverterService {
     private StudyGroupQueryService studyGroupQueryService;
+    private FileQueryService fileQueryService;
     private ModelMapper modelMapper = new ModelMapper();
 
-    public UserConverterService(StudyGroupQueryService studyGroupQueryService) {
+    @Autowired
+    public UserConverterService(StudyGroupQueryService studyGroupQueryService, FileQueryService fileQueryService) {
         this.studyGroupQueryService = studyGroupQueryService;
+        this.fileQueryService = fileQueryService;
     }
 
     public UserDTO convertToDto(User user) {
@@ -31,7 +36,10 @@ public class UserConverterService {
         User user = olduser;
 
         if (userDTO.getStudygroup() != null)
-        user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
+         user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
+
+        if(userDTO.getPhoto() != null)
+            user.setPhoto(fileQueryService.getFilebyId(userDTO.getPhoto()));
 
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
@@ -39,7 +47,6 @@ public class UserConverterService {
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setDescription(userDTO.getDescription());
-        user.setPhoto(userDTO.getPhoto());
         user.setStarosta(userDTO.getStarosta());
         user.setUsername(userDTO.getUsername());
         return user;

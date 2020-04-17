@@ -32,19 +32,15 @@ public class ApplicationTest {
 
     @Test
     public void userConverterService_ConvertToEntity_Test() throws Exception {
-        UserDTO userDTO = new UserDTO(
-                "testName",
-                "testLastName",
-                13031998l,
-                "testemail@gmail.com",
-                "+380664651493",
-                "bla bla bla",
-                "asda/asda/asd.png",
-                null,
-                null,
-                "testlogin",
-                "testpassword"
-        );
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("testName");
+        userDTO.setLastName("testName");
+        userDTO.setBirthday(13031998l);
+        userDTO.setEmail("testemail@gmail.com");
+        userDTO.setPhone("+380664651493");
+        userDTO.setDescription("bla bla bla");
+        userDTO.setUsername( "testlogin");
+        userDTO.setPassword("testpassword");
 
         User user = userConverterService.convertToEntity(userDTO);
         assertEquals("testlogin",user.getUsername());
@@ -52,18 +48,15 @@ public class ApplicationTest {
     }
     @Test
     public void userCommandService_SaveUser_Test() throws Exception {
-        UserDTO userdto = new UserDTO(
-                "Viktor",
-                "Sapojnyak",
-                1220231l,
-                "sapmail@gmail.com",
-                "380664651493",
-                "test description",
-                "/photo/test.png",
-                null,
-                null,
-                "sap",
-                "pass");
+        UserDTO userdto = new UserDTO();
+        userdto.setFirstName("testName");
+        userdto.setLastName("testName");
+        userdto.setBirthday(13031998l);
+        userdto.setEmail("testemail@gmail.com");
+        userdto.setPhone("+380664651493");
+        userdto.setDescription("bla bla bla");
+        userdto.setUsername( "testlogin");
+        userdto.setPassword("testpassword");
         userCommandService.saveUser(userConverterService.convertToEntity(userdto));
         User user = userQueryService.getUserByUsername("sap");
         assertEquals("sap", user.getUsername());

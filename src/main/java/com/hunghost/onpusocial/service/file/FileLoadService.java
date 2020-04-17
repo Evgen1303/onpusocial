@@ -126,6 +126,7 @@ public class FileLoadService {
         serverFile.setFilename(login+multipartFile.getOriginalFilename());
         serverFile.setFiletype(mediaType.getType());
         serverFile.setFileowner(user);
+        serverFile.setData(multipartFile.getBytes());
         fileCommandService.saveFile(serverFile);
         serverFile.setFilename(serverFile.getId()+serverFile.getFilename());
         fileCommandService.saveFile(serverFile);
@@ -135,7 +136,7 @@ public class FileLoadService {
 
         if(profilephoto == true){
             user = userQueryService.getUserByUsername(login);
-            user.setPhoto(serverFile.getFilename());
+            user.setPhoto(serverFile);
             userCommandService.updateUser(user);
             log.info("Change user photo:"+user.getUsername()+" at "+user.getPhoto());
         }

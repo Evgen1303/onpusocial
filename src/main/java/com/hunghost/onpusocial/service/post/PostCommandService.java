@@ -15,6 +15,19 @@ public class PostCommandService {
     }
 
     public void savePost(Post post) {
+Boolean isAlluser = post.getAlluser();
+Boolean isSubsc = post.getSubscribers();
+
+        if(
+                isAlluser == null &&
+                isSubsc == null &&
+                post.getStudygroup() == null &&
+                post.getKafedra()==null &&
+                post.getFaculty() == null
+                ){
+
+        post.setAlluser(true);
+        }
         postRepository.save(post);
     }
     public void deletePost(Long id) {

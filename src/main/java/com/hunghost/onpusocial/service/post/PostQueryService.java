@@ -1,6 +1,5 @@
 package com.hunghost.onpusocial.service.post;
 
-import com.hunghost.onpusocial.OnpusocialApplication;
 import com.hunghost.onpusocial.entity.*;
 import com.hunghost.onpusocial.exception.ResourceNotFoundException;
 import com.hunghost.onpusocial.repositories.PostRepository;

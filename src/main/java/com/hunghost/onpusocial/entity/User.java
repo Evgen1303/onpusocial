@@ -37,7 +37,9 @@ public class User {
     @Phone
     private String phone;
     private String description;
-    private String photo;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id")
+    private ServerFile photo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "studygroup_id", nullable = true)
@@ -83,11 +85,25 @@ public class User {
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<Post> postList;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private List<PostComment> postCommentList;
+
+
+    public User() {
+    }
+
+    public ServerFile getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(ServerFile photo) {
+        this.photo = photo;
+    }
 
     public Integer getPostCommentList() {
         return postCommentList.size();
@@ -105,53 +121,6 @@ public class User {
         this.postList = postList;
     }
 
-    public User(String firstName, String lastName, Long birthday, @NotNull @Email(message = "Not suitable format for Email") String email, String phone, String description, String photo, Studygroup studygroup, Boolean starosta, @NotNull String username, String password, Collection<Role> authorities) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.email = email;
-        this.phone = phone;
-        this.description = description;
-        this.photo = photo;
-        this.studygroup = studygroup;
-        this.starosta = starosta;
-        this.username = username;
-        this.password = password;
-        this.authorities = authorities;
-    }
-
-    public User(String firstName, String lastName, Long birthday, @NotNull @Email(message = "Not suitable format for Email") String email, String phone, String description, String photo, Studygroup studygroup, Boolean starosta, @NotNull String username, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.email = email;
-        this.phone = phone;
-        this.description = description;
-        this.photo = photo;
-        this.studygroup = studygroup;
-        this.starosta = starosta;
-        this.username = username;
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday=" + birthday +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", description='" + description + '\'' +
-                ", photo='" + photo + '\'' +
-                //", studygroup=" + studygroup +
-                ", starosta=" + starosta +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", authorities=" + authorities +
-                '}';
-    }
 
     public Studygroup getStudygroup() {
         return studygroup;
@@ -159,9 +128,6 @@ public class User {
 
     public void setStudygroup(Studygroup studygroup) {
         this.studygroup = studygroup;
-    }
-
-    public User() {
     }
 
     public Long getId() {
@@ -220,13 +186,6 @@ public class User {
         this.description = description;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     public Boolean getStarosta() {
         return starosta;

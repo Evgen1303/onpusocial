@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "files")
@@ -23,13 +24,17 @@ public class ServerFile {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User fileowner;
 
+    @Lob
+    private byte[] data;
+
     @Override
     public String toString() {
-        return "File{" +
+        return "ServerFile{" +
                 "id=" + id +
                 ", filename='" + filename + '\'' +
                 ", filetype='" + filetype + '\'' +
                 ", fileowner=" + fileowner +
+                ", data=" + Arrays.toString(data) +
                 '}';
     }
 
@@ -63,5 +68,13 @@ public class ServerFile {
 
     public void setFileowner(User fileowner) {
         this.fileowner = fileowner;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }

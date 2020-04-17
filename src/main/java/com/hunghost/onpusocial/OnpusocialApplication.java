@@ -41,21 +41,21 @@ package com.hunghost.onpusocial;
 
     @PostConstruct
     public void init(){
-        User user = new User(
-                "Test name",
-                "Test lastname",
-                1220231l,
-                "test@gmail.com",
-                "380664651493",
-                "test description",
-                "/photo/test.png",
-                null,
-                null,
-                "login",
-                passwordEncoder.encode("pass"),
-                Arrays.asList(
+
+
+        User user = new User();
+        user.setFirstName("General");
+        user.setLastName("Admin");
+        user.setBirthday(12345L);
+        user.setEmail("test@gmail.com");
+        user.setPhone("380664651493");
+        user.setDescription("Test description");
+        user.setUsername("login");
+        user.setPassword(passwordEncoder.encode("pass"));
+        user.setAuthorities(Arrays.asList(
                         new Role("ROLE_USER"),
                         new Role("ROLE_ADMIN")));
+
         if (userRepository.findByUsername(user.getUsername()) == null){
             userRepository.save(user);
             log.info("User create: "+user.getUsername());
@@ -90,21 +90,19 @@ package com.hunghost.onpusocial;
             log.info("Studygroup created: "+studygroup.getNameGroup());
         }
 
-        User user2 = new User(
-                "Victor",
-                "Sap",
-                1220231l,
-                "victor@gmail.com",
-                "380664651493",
-                "test2 description",
-                "",
-                studygroupRepository.findAll().get(0),
-                null,
-                "victor",
-                passwordEncoder.encode("victor"),
-                Arrays.asList(
-                        new Role("ROLE_USER"),
-                        new Role("ROLE_ADMIN")));
+        User user2 = new User();
+        user2.setFirstName("Victor");
+        user2.setLastName("Sap");
+        user2.setBirthday(1220231l);
+        user2.setEmail("victor@gmail.com");
+        user2.setPhone("380664651493");
+        user2.setDescription("test2 description");
+        user2.setUsername("victor");
+        user2.setPassword(passwordEncoder.encode("victor"));
+        user2.setAuthorities(Arrays.asList(
+                new Role("ROLE_USER"),
+                new Role("ROLE_ADMIN")));
+        user2.setStudygroup(studygroupRepository.findAll().get(0));
 
         if (userRepository.findByUsername(user2.getUsername()) == null){
             userRepository.save(user2);

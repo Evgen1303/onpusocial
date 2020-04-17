@@ -34,9 +34,10 @@ public class UserCommandService {
 
     public void saveUser(User user) {
         if (userQueryService.getUserByUsername(user.getUsername()) == null) {
-//        user.addAuthorities(roleQueryService.getRoleById(1l));
+        user.addAuthorities(roleQueryService.getRoleById(1l));
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             if (userQueryService.isFreeEmail(user.getEmail()) && userQueryService.isFreeUsername(user.getUsername())) {
+
                 userRepository.save(user);
                 log.info("New user is save");
             } else {

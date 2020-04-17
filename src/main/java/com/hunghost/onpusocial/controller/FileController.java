@@ -1,6 +1,7 @@
 package com.hunghost.onpusocial.controller;
 
 import com.hunghost.onpusocial.entity.ServerFile;
+import com.hunghost.onpusocial.exception.ResourceNotFoundException;
 import com.hunghost.onpusocial.service.file.FileLoadService;
 import com.hunghost.onpusocial.service.file.FileQueryService;
 import org.apache.logging.log4j.LogManager;
@@ -72,6 +73,11 @@ public class FileController {
     @GetMapping("/users")
     public List<ServerFile> getFilesByUsers() {
         return fileQueryService.getFilesByUsers();
+    }
+
+    @GetMapping("/file/{fileid}")
+    public ServerFile getFileById(@PathVariable Long fileid) {
+        return fileQueryService.getFilebyId(fileid);
     }
     @GetMapping("/users/{userId}")
     public List<ServerFile> getFilesByUserId(@PathVariable Long userId) {

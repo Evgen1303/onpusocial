@@ -7,7 +7,7 @@ public class UserDTO {
     private String email;
     private String phone;
     private String description;
-    private String photo;
+    private Long photo;
     private Long studygroup;
     private Boolean starosta;
     private String username;
@@ -33,19 +33,6 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String firstName, String lastName, Long birthday, String email, String phone, String description, String photo, Long studygroup, Boolean starosta, String username, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.email = email;
-        this.phone = phone;
-        this.description = description;
-        this.photo = photo;
-        this.studygroup = studygroup;
-        this.starosta = starosta;
-        this.username = username;
-        this.password = password;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -95,11 +82,11 @@ public class UserDTO {
         this.description = description;
     }
 
-    public String getPhoto() {
+    public Long getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Long photo) {
         this.photo = photo;
     }
 

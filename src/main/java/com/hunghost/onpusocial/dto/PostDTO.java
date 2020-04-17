@@ -8,6 +8,7 @@ public class PostDTO {
     private Long kafedra;
     private Long faculty;
     private Boolean subscribers;
+    private Boolean alluser ;
     private Long date;
 
     @Override
@@ -20,6 +21,7 @@ public class PostDTO {
                 ", kafedra=" + kafedra +
                 ", faculty=" + faculty +
                 ", subscribers=" + subscribers +
+                ", alluser=" + alluser +
                 ", date=" + date +
                 '}';
     }
@@ -78,6 +80,14 @@ public class PostDTO {
 
     public void setSubscribers(Boolean subscribers) {
         this.subscribers = subscribers;
+    }
+
+    public Boolean getAlluser() {
+        return alluser;
+    }
+
+    public void setAlluser(Boolean alluser) {
+        this.alluser = alluser;
     }
 
     public Long getDate() {
