@@ -20,6 +20,7 @@ public class Studygroup {
     private Kafedra kafedra;
     private Long course;
     private Long stream;
+    private Boolean isNotStudentGroup = false;
 
     @OneToMany(mappedBy = "studygroup")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -45,7 +46,17 @@ public class Studygroup {
                 ", kafedra=" + kafedra +
                 ", course=" + course +
                 ", stream=" + stream +
+                ", isNotStudentGroup=" + isNotStudentGroup +
+                ", userList=" + userList +
                 '}';
+    }
+
+    public Boolean getNotStudentGroup() {
+        return isNotStudentGroup;
+    }
+
+    public void setNotStudentGroup(Boolean notStudentGroup) {
+        isNotStudentGroup = notStudentGroup;
     }
 
     public Long getId() {

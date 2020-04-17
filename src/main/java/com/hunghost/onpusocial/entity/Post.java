@@ -119,6 +119,11 @@ public class Post {
         return this.user.getUsername();
     }
 
+    @JsonIgnore
+    public User getUserObject(){
+        return this.user;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

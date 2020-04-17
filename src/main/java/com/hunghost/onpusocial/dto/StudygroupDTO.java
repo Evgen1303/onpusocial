@@ -6,6 +6,7 @@ public class StudygroupDTO {
     private Long kafedra;
     private Long course;
     private Long stream;
+    private  Boolean isNotStudentGroup;
 
     @Override
     public String toString() {
@@ -15,6 +16,7 @@ public class StudygroupDTO {
                 ", kafedra=" + kafedra +
                 ", course=" + course +
                 ", stream=" + stream +
+                ", isNotStudentGroup=" + isNotStudentGroup +
                 '}';
     }
 
@@ -56,5 +58,13 @@ public class StudygroupDTO {
 
     public void setStream(Long stream) {
         this.stream = stream;
+    }
+
+    public Boolean getNotStudentGroup() {
+        return isNotStudentGroup;
+    }
+
+    public void setNotStudentGroup(Boolean notStudentGroup) {
+        isNotStudentGroup = notStudentGroup;
     }
 }

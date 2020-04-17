@@ -80,7 +80,7 @@ public class PostController {
                                           @PageableDefault(size = DEFAULT_PAGE_SIZE)
                                           @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD, direction = Sort.Direction.DESC)})
                                           Pageable pageable) {
-        log.info("Получена страница постов №" + pageable.getPageNumber() + " Для пользователя " + login);
+        log.info("Получена страница постов №" + pageable.getPageNumber() + " Пользователя " + login);
         return postQueryService.getPostByUserLogin(login, pageable);
     }
 
