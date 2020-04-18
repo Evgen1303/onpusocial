@@ -49,13 +49,10 @@ public class Post {
     @JsonIgnore
     private Set<PostComment> postCommentSet;
 
-    public Integer getPostCommentSet() {
-        return postCommentSet.size();
-    }
+    @OneToMany(mappedBy = "post")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private  Set<ServerFile> serverFileSet;
 
-    public void setPostCommentSet(Set<PostComment> postCommentSet) {
-        this.postCommentSet = postCommentSet;
-    }
 
     @Override
     public String toString() {
@@ -71,9 +68,26 @@ public class Post {
                 ", alluser=" + alluser +
                 ", date=" + date +
                 ", userIdfield=" + userIdfield +
+                ", postCommentSet=" + postCommentSet +
+                ", serverFileSet=" + serverFileSet +
                 '}';
     }
 
+    public Integer getPostCommentSet() {
+        return postCommentSet.size();
+    }
+
+    public void setPostCommentSet(Set<PostComment> postCommentSet) {
+        this.postCommentSet = postCommentSet;
+    }
+
+    public Set<ServerFile> getServerFileSet() {
+        return serverFileSet;
+    }
+
+    public void setServerFileSet(Set<ServerFile> serverFileSet) {
+        this.serverFileSet = serverFileSet;
+    }
 
     public Long getUserIdfield() {
         return user.getId();

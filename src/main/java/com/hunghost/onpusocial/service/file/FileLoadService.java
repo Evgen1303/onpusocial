@@ -4,6 +4,7 @@ import com.hunghost.onpusocial.entity.ServerFile;
 import com.hunghost.onpusocial.entity.User;
 import com.hunghost.onpusocial.exception.MyFileNotFoundException;
 import com.hunghost.onpusocial.exception.ResourceNotFoundException;
+import com.hunghost.onpusocial.service.post.PostQueryService;
 import com.hunghost.onpusocial.service.user.UserCommandService;
 import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.apache.logging.log4j.LogManager;
@@ -35,14 +36,16 @@ public class FileLoadService {
     private FileCommandService fileCommandService;
     private ServletContext servletContext;
     private UserCommandService userCommandService;
+    private PostQueryService postQueryService;
 
 
     @Autowired
-    public FileLoadService(UserQueryService userQueryService, FileCommandService fileCommandService, ServletContext servletContext, UserCommandService userCommandService) {
+    public FileLoadService(UserQueryService userQueryService, FileCommandService fileCommandService, ServletContext servletContext, UserCommandService userCommandService, PostQueryService postQueryService) {
         this.userQueryService = userQueryService;
         this.fileCommandService = fileCommandService;
         this.servletContext = servletContext;
         this.userCommandService = userCommandService;
+        this.postQueryService = postQueryService;
     }
 
     public ResponseEntity downloadFile(String fileName, String login) throws IOException {
@@ -98,8 +101,6 @@ public class FileLoadService {
     }
 
     public ResponseEntity uploadFile(MultipartFile multipartFile, String login, Boolean profilephoto) throws IOException {
-        String fileName;
-
         File resourceFolder = new File(DIRECTORY);
         if (!resourceFolder.exists()) {
             if (resourceFolder.mkdir()) {
@@ -140,6 +141,49 @@ public class FileLoadService {
             userCommandService.updateUser(user);
             log.info("Change user photo:"+user.getUsername()+" at "+user.getPhoto());
         }
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity uploadFiles(MultipartFile[] multipartFiles, String login, Long postid) throws IOException {
+
+        File resourceFolder = new File(DIRECTORY);
+        if (!resourceFolder.exists()) {
+            if (resourceFolder.mkdir()) {
+                log.info("Folder is created!");
+            } else {
+                log.info("Failed to create Folder!");
+            }
+        }
+        File catalog = new File(DIRECTORY+"/"+login);
+        if (!catalog.exists()) {
+            if (catalog.mkdir()) {
+                log.info("Directory is created!");
+            } else {
+                log.info("Failed to create directory!");
+            }
+        }
+        User user = userQueryService.getUserByUsername(login);
+        if(user == null){
+            throw new ResourceNotFoundException("User not found");
+        }
+
+        for(MultipartFile multipartFile:multipartFiles) {
+            MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, multipartFile.getOriginalFilename());
+
+            ServerFile serverFile = new ServerFile();
+            serverFile.setFilename(login + multipartFile.getOriginalFilename());
+            serverFile.setFiletype(mediaType.getType());
+            serverFile.setFileowner(user);
+            serverFile.setData(multipartFile.getBytes());
+            serverFile.setPost(postQueryService.getPostById(postid));
+            fileCommandService.saveFile(serverFile);
+            serverFile.setFilename(serverFile.getId() + serverFile.getFilename());
+            fileCommandService.saveFile(serverFile);
+            File file = new File(catalog + "/" + serverFile.getFilename());
+            multipartFile.transferTo(file);
+            log.info(String.format("Hello, File name '%s' uploaded successfully.", multipartFile.getOriginalFilename()));
+        }
+
         return ResponseEntity.ok().build();
     }
 }

@@ -48,6 +48,11 @@ public class FileController {
         return fileLoadService.uploadFile(file,login,true);
     }
 
+    @PostMapping(value = "/upload/postfiles", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity uploadFilesPost(@RequestParam MultipartFile[] files, @RequestParam String login, @RequestParam Long postid) throws IOException {
+        return fileLoadService.uploadFiles(files,login,postid);
+    }
+
     @GetMapping("/download")
     public ResponseEntity downloadFile(@RequestParam(defaultValue = DEFAULT_FILE_NAME) String fileName, @RequestParam String login) throws IOException {
         return fileLoadService.downloadFile(fileName, login);

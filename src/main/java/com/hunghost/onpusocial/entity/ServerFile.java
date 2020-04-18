@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,6 +28,12 @@ public class ServerFile {
     @Lob
     private byte[] data;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
+    private Post post;
+
     @Override
     public String toString() {
         return "ServerFile{" +
@@ -35,7 +42,16 @@ public class ServerFile {
                 ", filetype='" + filetype + '\'' +
                 ", fileowner=" + fileowner +
                 ", data=" + Arrays.toString(data) +
+                ", post=" + post +
                 '}';
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public Long getId() {
