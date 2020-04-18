@@ -111,9 +111,13 @@ http://localhost:9005/files/users/3 - вот так конкретного юз�
 http://localhost:9005/files/downloadasresource?fileName=13logintest2.jpg&login=login
 http://localhost:9005/files/download?fileName=1logintest2.jpg&login=login
 
+http://localhost:9005/files/file/{id} - вывести файл по айди
+
 POST http://localhost:9005/files/upload/profilephoto - разница загрузки через этот запрос в том, что у юзера обновляется ещё поле "фото".
                                                        И ты сможешь получить его профильную фотку если возьмёшь название файла с этого профиля
                                                        и через запрос загрузки её скачать
 POST http://localhost:9005/files/upload
 параметры   file: {file}
             login: {login}
+
+
