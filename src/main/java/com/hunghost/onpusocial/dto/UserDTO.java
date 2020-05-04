@@ -7,28 +7,13 @@ public class UserDTO {
     private String email;
     private String phone;
     private String description;
-    private Long photo;
+    private Long profilephoto;
     private Long studygroup;
     private Boolean starosta;
     private String username;
     private String password;
 
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday=" + birthday +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", description='" + description + '\'' +
-                ", photo='" + photo + '\'' +
-                ", studygroup=" + studygroup +
-                ", starosta=" + starosta +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+
 
     public UserDTO() {
     }
@@ -82,12 +67,12 @@ public class UserDTO {
         this.description = description;
     }
 
-    public Long getPhoto() {
-        return photo;
+    public Long getProfilephoto() {
+        return profilephoto;
     }
 
-    public void setPhoto(Long photo) {
-        this.photo = photo;
+    public void setProfilephoto(Long profilephoto) {
+        this.profilephoto = profilephoto;
     }
 
     public Long getStudygroup() {

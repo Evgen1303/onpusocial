@@ -37,9 +37,11 @@ public class User {
     @Phone
     private String phone;
     private String description;
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id")
-    private ServerFile photo;
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id",nullable = true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private ServerFile profilephoto;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "studygroup_id", nullable = true)
@@ -94,15 +96,21 @@ public class User {
     private List<PostComment> postCommentList;
 
 
+
+
     public User() {
     }
 
-    public ServerFile getPhoto() {
-        return photo;
+    public ServerFile getProfilephoto() {
+        return profilephoto;
     }
 
-    public void setPhoto(ServerFile photo) {
-        this.photo = photo;
+    public ServerFile getProfilephotoObj() {
+        return profilephoto;
+    }
+
+    public void setProfilephoto(ServerFile profilephoto) {
+        this.profilephoto = profilephoto;
     }
 
     public Integer getPostCommentList() {

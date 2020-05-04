@@ -23,6 +23,7 @@ public class ServerFile {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "users_id", nullable = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
     private User fileowner;
 
     @Lob

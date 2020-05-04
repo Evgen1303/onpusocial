@@ -38,8 +38,8 @@ public class UserConverterService {
         if (userDTO.getStudygroup() != null)
          user.setStudygroup(studyGroupQueryService.getStudyGroupById(userDTO.getStudygroup()));
 
-        if(userDTO.getPhoto() != null)
-            user.setPhoto(fileQueryService.getFilebyId(userDTO.getPhoto()));
+        if(userDTO.getProfilephoto() != null)
+            user.setProfilephoto(fileQueryService.getFilebyId(userDTO.getProfilephoto()));
 
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

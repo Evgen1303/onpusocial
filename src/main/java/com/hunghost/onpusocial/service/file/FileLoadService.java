@@ -137,9 +137,9 @@ public class FileLoadService {
 
         if(profilephoto == true){
             user = userQueryService.getUserByUsername(login);
-            user.setPhoto(serverFile);
+            user.setProfilephoto(serverFile);
             userCommandService.updateUser(user);
-            log.info("Change user photo:"+user.getUsername()+" at "+user.getPhoto());
+            log.info("Change user photo:"+user.getUsername()+" at "+user.getProfilephotoObj());
         }
         return ResponseEntity.ok().build();
     }
