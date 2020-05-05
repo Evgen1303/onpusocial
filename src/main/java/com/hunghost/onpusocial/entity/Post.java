@@ -133,6 +133,10 @@ public class Post {
         return this.user.getUsername();
     }
 
+    public ServerFile getOwnerPhoto(){
+        return this.user.getProfilephoto();
+    }
+
     @JsonIgnore
     public User getUserObject(){
         return this.user;

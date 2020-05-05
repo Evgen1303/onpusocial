@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "faculty")
@@ -15,17 +16,22 @@ public class Faculty {
     private String facultyName;
     private String facultyDescription;
 
-    @OneToMany(mappedBy = "faculty", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Kafedra> kafedraList;
-
-    public Integer getKafedraList() {
-        return kafedraList.size();
-    }
-
-    public void setKafedraList(List<Kafedra> kafedraList) {
-        this.kafedraList = kafedraList;
-    }
+//    @OneToMany(mappedBy = "faculty", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private Set<Kafedra> kafedraList;
+//
+//    public Integer getKafedraList() {
+//        if(!kafedraList.isEmpty()){
+//            return kafedraList.size();
+//        }else{
+//            return null;
+//        }
+//
+//    }
+//
+//    public void setKafedraList(Set<Kafedra> kafedraList) {
+//        this.kafedraList = kafedraList;
+//    }
 
     @Override
     public String toString() {
