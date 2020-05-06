@@ -26,13 +26,9 @@ public class Studygroup {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<User> userList;
 
-    public Integer getUserList() {
-        return userList.size();
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
+//    public Integer getUserList() {
+//        return userList.size();
+//    }
 
     public Studygroup() {
     }

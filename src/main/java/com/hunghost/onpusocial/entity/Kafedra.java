@@ -24,13 +24,10 @@ public class Kafedra {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Studygroup> studygroupSet;
 
-    public Integer getStudygroupSet() {
-        return studygroupSet.size();
-    }
+//    public Integer getStudygroupSet() {
+//        return studygroupSet.size();
+//    }
 
-    public void setStudygroupSet(Set<Studygroup> studygroupSet) {
-        this.studygroupSet = studygroupSet;
-    }
 
     @Override
     public String toString() {
