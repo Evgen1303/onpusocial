@@ -95,9 +95,6 @@ public class User {
     @JsonIgnore
     private List<PostComment> postCommentList;
 
-
-
-
     public User() {
     }
 

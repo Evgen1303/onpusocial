@@ -2,16 +2,20 @@ package com.hunghost.onpusocial.chats;
 
 import java.time.LocalDateTime;
 
+
 public class ChatMessage {
+
     private MessageType type;
     private String content;
     private String sender;
+
     private LocalDateTime localDateTime = LocalDateTime.now();
     public enum MessageType {
         CHAT,
         JOIN,
         LEAVE
     }
+
     public MessageType getType() {
         return type;
     }
@@ -29,5 +33,9 @@ public class ChatMessage {
     }
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 }
