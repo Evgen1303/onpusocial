@@ -30,31 +30,8 @@ public class Message {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Chat chat;
 
-    private LocalDateTime localDateTime = LocalDateTime.now();
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
-    }
-
-    public ChatMessage.MessageType getType() {
-        return type;
-    }
-    public void setType(ChatMessage.MessageType type) {
-        this.type = type;
-    }
-    public String getContent() {
-        return content;
-    }
-    public void setContent(String content) {
-        this.content = content;
-    }
-    public String getSender() {
-        return sender;
-    }
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
+    private LocalDateTime localDateTime;
+    private String MessageType;
 
     public Long getId() {
         return id;
@@ -62,6 +39,30 @@ public class Message {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ChatMessage.MessageType getType() {
+        return type;
+    }
+
+    public void setType(ChatMessage.MessageType type) {
+        this.type = type;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public User getOwner() {
@@ -82,5 +83,17 @@ public class Message {
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
+
+    public String getMessageType() {
+        return MessageType;
+    }
+
+    public void setMessageType(String messageType) {
+        MessageType = messageType;
     }
 }

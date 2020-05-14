@@ -34,6 +34,9 @@ public class Chat {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<User> members = new HashSet<>();
 
+    public Chat() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -72,5 +75,8 @@ public class Chat {
 
     public void setMembers(Set<User> members) {
         this.members = members;
+    }
+    public void addMember(User user){
+        this.members.add(user);
     }
 }

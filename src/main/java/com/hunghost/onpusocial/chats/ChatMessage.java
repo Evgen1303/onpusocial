@@ -8,12 +8,21 @@ public class ChatMessage {
     private MessageType type;
     private String content;
     private String sender;
+    private Long chatId;
 
     private LocalDateTime localDateTime = LocalDateTime.now();
     public enum MessageType {
         CHAT,
         JOIN,
         LEAVE
+    }
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
     }
 
     public MessageType getType() {
