@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.chats;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -7,14 +8,20 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
+
 @Controller
 public class ChatController {
     private ChatService chatService;
 
+    @Autowired
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
+
     @MessageMapping("/chat.sendMessage/{chatid}")
     @SendTo("/topic/public/{chatid}")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable Long chatid) {
-        synhChats(chatMessage,chatid);
+        chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
         return chatMessage;
     }
@@ -25,12 +32,9 @@ public class ChatController {
                                SimpMessageHeaderAccessor headerAccessor) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        synhChats(chatMessage,chatid);
+        chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
         return chatMessage;
     }
 
-    private void synhChats(ChatMessage chatMessage, Long chatid){
-        chatService.checkChat(chatid,chatMessage);
-    }
 }
