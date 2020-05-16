@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.chats;
 
+
 import com.hunghost.onpusocial.entity.User;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "chat")
+@Table(name = "chats")
 public class Chat {
 
     @Id
@@ -20,7 +21,7 @@ public class Chat {
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "owner", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User owner;
 
@@ -28,13 +29,24 @@ public class Chat {
     @JoinTable(
             name = "chats_users",
             joinColumns = @JoinColumn(
-                    name = "chat_id", referencedColumnName = "id"),
+                    name = "chatt_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "id"))
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<User> members = new HashSet<>();
 
     public Chat() {
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", owner=" + owner +
+                ", members=" + members +
+                '}';
     }
 
     public Long getId() {
@@ -75,8 +87,5 @@ public class Chat {
 
     public void setMembers(Set<User> members) {
         this.members = members;
-    }
-    public void addMember(User user){
-        this.members.add(user);
     }
 }

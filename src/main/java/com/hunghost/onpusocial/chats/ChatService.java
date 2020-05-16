@@ -7,6 +7,8 @@ import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -31,13 +33,42 @@ public class ChatService {
             Chat chat = new Chat();
             chat.setId(id);
             chat.setOwner(user);
-            chat.addMember(user);
+
+            Set<User> userSet = chat.getMembers();
+            userSet.add(user);
+            chat.setMembers(userSet);
+            chatRepository.save(chat);
             return chat;
         }
     }
 
-    public void saveChat(Chat chat){
+    public Chat checkChat(Long id, String owner){
+        try {
+            Chat chat = getChatById(id);
+            return chat;
+        }catch (Exception e){
+            User user = userQueryService.getUserByUsername(owner);
+            Chat chat = new Chat();
+            chat.setId(id);
+            chat.setOwner(user);
+            Set<User> userSet = chat.getMembers();
+            userSet.add(user);
+            chat.setMembers(userSet);
+            chatRepository.save(chat);
+
+            return chat;
+        }
+    }
+
+    public Chat saveChat(String owner){
+        Chat chat = new Chat();
+        chat.setOwner(userQueryService.getUserByUsername(owner));
+        chat.setName("Chat "+owner);
+        Set<User> memberChat = chat.getMembers();
+        memberChat.add(userQueryService.getUserByUsername(owner));
+        chat.setMembers(memberChat);
         chatRepository.save(chat);
+        return chat;
     }
 
     public Chat getChatById(Long id){
@@ -45,9 +76,7 @@ public class ChatService {
     }
 
     public List<Chat> getChatListByUserLogin(String login){
-        Set<User> userSet = null;
         User user = userQueryService.getUserByUsername(login);
-        userSet.add(user);
-        return chatRepository.findByMembersIsContaining(userSet);
+        return chatRepository.findByMembersIsContaining(user);
     }
 }

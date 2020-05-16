@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chat")
+@Table(name = "messages")
 public class Message {
 
     @Id

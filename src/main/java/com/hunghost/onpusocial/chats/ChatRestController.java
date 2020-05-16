@@ -18,10 +18,15 @@ public class ChatRestController {
 
     @GetMapping("/checkchat")
     public Chat checkChat(@RequestParam Long chatid, @RequestParam String owner) {
-        return null;
+        return chatService.checkChat(chatid,owner);
     }
 
-    @GetMapping("/byuser/{login}")
+    @PostMapping
+    public Chat saveChat(@RequestParam String owner) {
+            return chatService.saveChat(owner);
+    }
+
+    @GetMapping("/byuser")
     public List<Chat> getChatByUserLogin(@RequestParam String login) {
         return chatService.getChatListByUserLogin(login);
     }

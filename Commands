@@ -109,18 +109,17 @@ GET
 http://localhost:9005/files/users вывести все файлы всех юзеров
 http://localhost:9005/files/users/3 - вот так конкретного юзера по айди
 http://localhost:9005/files/file/{id} - вывести файл по айди
-
-
 http://localhost:9005/files/downloadasresource?fileName=13logintest2.jpg&login=login
 http://localhost:9005/files/download?fileName=1logintest2.jpg&login=login
-
-
-
 POST http://localhost:9005/files/upload/profilephoto - разница загрузки через этот запрос в том, что у юзера обновляется ещё поле "фото".
-
 POST http://localhost:9005/files/upload
-
 параметры   file: {file}
             login: {login}
+
+CHATS
+GET     chats/checkchat - Long chatid,String owner  - Возвращает чат по айди. Если такого чата нет то создает его и возвращает
+POST    chats/          - String owner              - Создает чат с указанным владельцем
+GET     chats//byuser   - String login              - Список чатов, в которых есть данный юзер
+
 
 
