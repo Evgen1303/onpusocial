@@ -1,9 +1,11 @@
 package com.hunghost.onpusocial.chats;
 
+import com.hunghost.onpusocial.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -24,6 +26,11 @@ public class ChatRestController {
     @PostMapping
     public Chat saveChat(@RequestParam String owner) {
             return chatService.saveChat(owner);
+    }
+
+    @PostMapping("/addmember")
+    public Set<User> addMemberToChat(@RequestParam String member, @RequestParam Long chatid ) {
+        return chatService.addMemberToChat(member,chatid);
     }
 
     @GetMapping("/byuser")

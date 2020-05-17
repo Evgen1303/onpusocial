@@ -75,6 +75,18 @@ public class ChatService {
         return chatRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
+    public Set<User> addMemberToChat(String member, Long chatId){
+        User user = userQueryService.getUserByUsername(member);
+        Chat chat = getChatById(chatId);
+        Set<User> userSet = chat.getMembers();
+        if(!chat.getMembers().contains(user)){
+            userSet.add(user);
+        }
+        chat.setMembers(userSet);
+        chatRepository.save(chat);
+        return userSet;
+    }
+
     public List<Chat> getChatListByUserLogin(String login){
         User user = userQueryService.getUserByUsername(login);
         return chatRepository.findByMembersIsContaining(user);

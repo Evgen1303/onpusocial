@@ -119,7 +119,7 @@ POST http://localhost:9005/files/upload
 CHATS
 GET     chats/checkchat - Long chatid,String owner  - Возвращает чат по айди. Если такого чата нет то создает его и возвращает
 POST    chats/          - String owner              - Создает чат с указанным владельцем
-GET     chats//byuser   - String login              - Список чатов, в которых есть данный юзер
-
+GET     chats/byuser   - String login              - Список чатов, в которых есть данный юзер
+POST    chats/addmember - String member, Long chatid - Добавить пользователя в чат. Если он там есть то команда игнорируется. Возвращает список юзеров в чате.
 
 
