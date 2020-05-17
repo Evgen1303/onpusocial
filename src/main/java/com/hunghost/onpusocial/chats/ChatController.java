@@ -21,7 +21,7 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage/{chatid}")
     @SendTo("/topic/public/{chatid}")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable Long chatid) {
-        chatService.checkChat(chatid,chatMessage);
+        //chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
         return chatMessage;
     }
@@ -32,7 +32,7 @@ public class ChatController {
                                SimpMessageHeaderAccessor headerAccessor) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        chatService.checkChat(chatid,chatMessage);
+        //chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
         return chatMessage;
     }
