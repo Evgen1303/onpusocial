@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatController {
     private ChatService chatService;
+    private MessageService messageService;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, MessageService messageService) {
         this.chatService = chatService;
+        this.messageService = messageService;
     }
 
     @MessageMapping("/chat.sendMessage/{chatid}")
@@ -23,6 +25,7 @@ public class ChatController {
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable Long chatid) {
         //chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
+        messageService.saveMessage(chatMessage,chatid);
         return chatMessage;
     }
 
@@ -34,6 +37,7 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         //chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
+        messageService.saveMessage(chatMessage,chatid);
         return chatMessage;
     }
 

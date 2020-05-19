@@ -31,7 +31,10 @@ public class Message {
     private Chat chat;
 
     private LocalDateTime localDateTime;
-    private String MessageType;
+    private ChatMessage.MessageType  MessageType;
+
+    public Message() {
+    }
 
     public Long getId() {
         return id;
@@ -89,11 +92,11 @@ public class Message {
         this.localDateTime = localDateTime;
     }
 
-    public String getMessageType() {
+    public ChatMessage.MessageType getMessageType() {
         return MessageType;
     }
 
-    public void setMessageType(String messageType) {
+    public void setMessageType(ChatMessage.MessageType messageType) {
         MessageType = messageType;
     }
 }

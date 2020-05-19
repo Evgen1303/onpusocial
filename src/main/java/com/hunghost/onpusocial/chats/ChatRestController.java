@@ -12,10 +12,12 @@ import java.util.Set;
 @RequestMapping("chats")
 public class ChatRestController {
     private ChatService chatService;
+    private  MessageService messageService;
 
     @Autowired
-    public ChatRestController(ChatService chatService) {
+    public ChatRestController(ChatService chatService, MessageService messageService) {
         this.chatService = chatService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/checkchat")
@@ -36,5 +38,10 @@ public class ChatRestController {
     @GetMapping("/byuser")
     public List<Chat> getChatByUserLogin(@RequestParam String login) {
         return chatService.getChatListByUserLogin(login);
+    }
+
+    @GetMapping("/messages")
+    public List<Message> geMessagesByUserLogin(@RequestParam String login) {
+        return messageService.getMessagesByUser(login);
     }
 }
