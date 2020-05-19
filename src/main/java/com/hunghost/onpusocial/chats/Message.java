@@ -76,8 +76,8 @@ public class Message {
         this.owner = owner;
     }
 
-    public Chat getChat() {
-        return chat;
+    public Long getChat() {
+        return chat.getId();
     }
 
     public void setChat(Chat chat) {
