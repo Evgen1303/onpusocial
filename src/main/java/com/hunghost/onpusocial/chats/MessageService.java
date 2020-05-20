@@ -1,6 +1,5 @@
 package com.hunghost.onpusocial.chats;
 
-import com.hunghost.onpusocial.exception.ResourceNotFoundException;
 import com.hunghost.onpusocial.repositories.MessageRepository;
 import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +20,17 @@ public class MessageService {
         this.userQueryService = userQueryService;
     }
 
-    public void saveMessage(ChatMessage chatMessage, Long chatid){
+    public Message saveMessage(ChatMessage chatMessage, Long chatid){
         Message message = new Message();
         message.setChat(chatService.getChatById(chatid));
+       // message.setChat(chatService.getChatById(1L));
         message.setContent(chatMessage.getContent());
         message.setLocalDateTime(chatMessage.getLocalDateTime());
         message.setMessageType(chatMessage.getType());
         message.setSender(chatMessage.getSender());
         message.setOwner(userQueryService.getUserByUsername(chatMessage.getSender()));
         messageRepository.save(message);
+        return message;
     }
 
     public List<Message> getMessagesByUser(String login){
