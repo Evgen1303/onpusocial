@@ -40,4 +40,8 @@ public class MessageService {
     public List<Message> getMessagesByUser(String login){
         return messageRepository.findByOwner(userQueryService.getUserByUsername(login));
     }
+
+    public List<Message> getMessagesByChat(Long chatId){
+        return messageRepository.findByChat(chatService.getChatById(chatId));
+    }
 }

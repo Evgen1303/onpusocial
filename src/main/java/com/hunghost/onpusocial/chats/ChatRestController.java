@@ -44,6 +44,10 @@ public class ChatRestController {
     public List<Message> getMessagesByUserLogin(@RequestParam String login) {
         return messageService.getMessagesByUser(login);
     }
+    @GetMapping("/chatmessages")
+    public List<Message> getMessagesByChatId(@RequestParam Long chatId) {
+        return messageService.getMessagesByChat(chatId);
+    }
     @PostMapping("/messages")
     public Message createMessagesByUserLogin(@RequestBody ChatMessage chatMessage,@RequestParam Long chatId) {
         return messageService.saveMessage(chatMessage,chatId);

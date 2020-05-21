@@ -1,6 +1,7 @@
 package com.hunghost.onpusocial.chats;
 
 import com.hunghost.onpusocial.service.user.UserCommandService;
+import com.hunghost.onpusocial.service.user.UserQueryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Controller;
 public class ChatController {
     private ChatService chatService;
     private MessageService messageService;
+    private UserQueryService userQueryService;
     private static final Logger log = LogManager.getLogger(UserCommandService.class);
 
     @Autowired
-    public ChatController(ChatService chatService, MessageService messageService) {
+    public ChatController(ChatService chatService, MessageService messageService, UserQueryService userQueryService) {
         this.chatService = chatService;
         this.messageService = messageService;
+        this.userQueryService = userQueryService;
     }
 
     @MessageMapping("/chat.sendMessage/{chatid}")
@@ -29,8 +32,10 @@ public class ChatController {
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable Long chatid) {
         //chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
-        log.info("Сообщение в сокетах");
-        messageService.saveMessage(chatMessage,chatid);
+        chatMessage.setServerFile(userQueryService.getUserByUsername(chatMessage.getSender()).getProfilephoto());
+        if(chatMessage.getType() == ChatMessage.MessageType.CHAT){
+            messageService.saveMessage(chatMessage,chatid);
+        }
         return chatMessage;
     }
 
@@ -42,8 +47,10 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         //chatService.checkChat(chatid,chatMessage);
         chatMessage.setChatId(chatid);
-        log.info("Сообщение в сокетах");
-        messageService.saveMessage(chatMessage,chatid);
+        chatMessage.setServerFile(userQueryService.getUserByUsername(chatMessage.getSender()).getProfilephoto());
+        if(chatMessage.getType() == ChatMessage.MessageType.CHAT){
+            messageService.saveMessage(chatMessage,chatid);
+        }
         return chatMessage;
     }
 

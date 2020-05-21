@@ -123,6 +123,7 @@ GET     chats/byuser   - String login              - Список чатов, в
 POST    chats/addmember - String member, Long chatid - Добавить пользователя в чат. Если он там есть то команда игнорируется. Возвращает список юзеров в чате.
 
 GET http://localhost:9005/chats/messages?login=login - Получить список сообщений конкретного юзера
+GET http://localhost:9005/chats/chatmessages?chatId=1 - Получить список сообщений из чата по айди
 
 
 
