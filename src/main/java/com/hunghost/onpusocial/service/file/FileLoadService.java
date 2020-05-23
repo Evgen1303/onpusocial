@@ -100,7 +100,7 @@ public class FileLoadService {
         }
     }
 
-    public ResponseEntity uploadFile(MultipartFile multipartFile, String login, Boolean profilephoto) throws IOException {
+    public ServerFile uploadFile(MultipartFile multipartFile, String login, Boolean profilephoto) throws IOException {
         File resourceFolder = new File(DIRECTORY);
         if (!resourceFolder.exists()) {
             if (resourceFolder.mkdir()) {
@@ -141,7 +141,7 @@ public class FileLoadService {
             userCommandService.updateUser(user);
             log.info("Change user photo:"+user.getUsername()+" at "+user.getProfilephotoObj());
         }
-        return ResponseEntity.ok().build();
+        return serverFile;
     }
 
     public ResponseEntity uploadFiles(MultipartFile[] multipartFiles, String login, Long postid) throws IOException {
@@ -186,4 +186,5 @@ public class FileLoadService {
 
         return ResponseEntity.ok().build();
     }
+
 }

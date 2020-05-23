@@ -1,9 +1,12 @@
 package com.hunghost.onpusocial.chats;
 
+import com.hunghost.onpusocial.dto.ChatDTO;
 import com.hunghost.onpusocial.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -26,8 +29,8 @@ public class ChatRestController {
     }
 
     @PostMapping
-    public Chat saveChat(@RequestParam String owner) {
-            return chatService.saveChat(owner);
+    public Chat saveChat(@RequestBody ChatDTO chatDTO) throws IOException {
+            return chatService.saveChat(chatDTO);
     }
 
     @PostMapping("/addmember")
@@ -51,5 +54,10 @@ public class ChatRestController {
     @PostMapping("/messages")
     public Message createMessagesByUserLogin(@RequestBody ChatMessage chatMessage,@RequestParam Long chatId) {
         return messageService.saveMessage(chatMessage,chatId);
+    }
+    @DeleteMapping("/deleteuserfromchat")
+    public Set<User> deleteuserFromChat(@RequestParam String login, @RequestParam Long chatId) {
+
+        return chatService.deleteUserFromChat(login,chatId);
     }
 }

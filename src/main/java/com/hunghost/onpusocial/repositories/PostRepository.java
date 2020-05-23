@@ -18,6 +18,6 @@ Page<Post> findByUserUsername(String username, Pageable pageable);
 List<Post> findBySubscribers(Boolean isForSubsc);
 
 Page<Post> findByAlluserOrStudygroup_IdOrKafedra_IdOrFaculty_IdOrUserIn(Boolean allUsers, Long studygroup, Long kafedra, Long faculty, List<User> user, Pageable pageable);
-    Page<Post> findByAlluserOrUserIn(Boolean allUsers, List<User> user, Pageable pageable);
+Page<Post> findByAlluserOrUserIn(Boolean allUsers, List<User> user, Pageable pageable);
 
 }

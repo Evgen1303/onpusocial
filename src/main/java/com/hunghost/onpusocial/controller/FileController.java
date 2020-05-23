@@ -39,12 +39,12 @@ public class FileController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity uploadFile(@RequestParam MultipartFile file, @RequestParam String login) throws IOException {
+    public ServerFile uploadFile(@RequestParam MultipartFile file, @RequestParam String login) throws IOException {
         return fileLoadService.uploadFile(file,login,false);
     }
 
     @PostMapping(value = "/upload/profilephoto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity uploadFileProfile(@RequestParam MultipartFile file, @RequestParam String login) throws IOException {
+    public ServerFile uploadFileProfile(@RequestParam MultipartFile file, @RequestParam String login) throws IOException {
         return fileLoadService.uploadFile(file,login,true);
     }
 

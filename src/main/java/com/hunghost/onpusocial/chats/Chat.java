@@ -1,6 +1,7 @@
 package com.hunghost.onpusocial.chats;
 
 
+import com.hunghost.onpusocial.entity.ServerFile;
 import com.hunghost.onpusocial.entity.User;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -34,6 +35,11 @@ public class Chat {
                     name = "user_id", referencedColumnName = "id"))
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Set<User> members = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "chat_photo",nullable = true)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private ServerFile chatphoto;
 
     public Chat() {
     }
@@ -87,5 +93,13 @@ public class Chat {
 
     public void setMembers(Set<User> members) {
         this.members = members;
+    }
+
+    public ServerFile getChatphoto() {
+        return chatphoto;
+    }
+
+    public void setChatphoto(ServerFile chatphoto) {
+        this.chatphoto = chatphoto;
     }
 }

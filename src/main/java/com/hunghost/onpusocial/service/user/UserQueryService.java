@@ -14,6 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -111,6 +113,10 @@ public class UserQueryService {
         User authuser = this.getUserByUsername(authuserlogin);
         User subuser = this.getUserByUsername(login);
         return authuser.getSubscriptions().contains(subuser);
+    }
+
+    public Set<User> getUserListByIds(Set<Long> ids){
+    return userRepository.findByIdIn(ids);
     }
 
 }

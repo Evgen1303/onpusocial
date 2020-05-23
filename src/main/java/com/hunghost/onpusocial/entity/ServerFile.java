@@ -1,6 +1,7 @@
 package com.hunghost.onpusocial.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hunghost.onpusocial.chats.Chat;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -47,14 +48,6 @@ public class ServerFile {
                 '}';
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
     public Long getId() {
         return id;
     }
@@ -87,11 +80,20 @@ public class ServerFile {
         this.fileowner = fileowner;
     }
 
+
     public byte[] getData() {
         return data;
     }
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
