@@ -1,5 +1,6 @@
 package com.hunghost.onpusocial.chats;
 
+import com.hunghost.onpusocial.repositories.ChatRepository;
 import com.hunghost.onpusocial.repositories.MessageRepository;
 import com.hunghost.onpusocial.service.user.UserCommandService;
 import com.hunghost.onpusocial.service.user.UserQueryService;
@@ -15,18 +16,24 @@ public class MessageService {
     private MessageRepository messageRepository;
     private ChatService chatService;
     private UserQueryService userQueryService;
+    private ChatRepository chatRepository;
+
     private static final Logger log = LogManager.getLogger(UserCommandService.class);
+
     @Autowired
-    public MessageService(MessageRepository messageRepository, ChatService chatService, UserQueryService userQueryService) {
+    public MessageService(MessageRepository messageRepository, ChatService chatService, UserQueryService userQueryService, ChatRepository chatRepository) {
         this.messageRepository = messageRepository;
         this.chatService = chatService;
         this.userQueryService = userQueryService;
+        this.chatRepository = chatRepository;
     }
+
+
+
 
     public Message saveMessage(ChatMessage chatMessage, Long chatid){
         Message message = new Message();
         message.setChat(chatService.getChatById(chatid));
-       // message.setChat(chatService.getChatById(1L));
         message.setContent(chatMessage.getContent());
         message.setLocalDateTime(chatMessage.getLocalDateTime());
         message.setMessageType(chatMessage.getType());
@@ -34,6 +41,9 @@ public class MessageService {
         message.setOwner(userQueryService.getUserByUsername(chatMessage.getSender()));
         messageRepository.save(message);
         log.info("Сообщение сохранилось");
+        Chat chat = chatService.getChatById(message.getChat());
+        chat.setMessage(message);
+        chatRepository.save(chat);
         return message;
     }
 

@@ -1,6 +1,8 @@
 import com.hunghost.onpusocial.OnpusocialApplication;
 import com.hunghost.onpusocial.dto.UserDTO;
+import com.hunghost.onpusocial.entity.Role;
 import com.hunghost.onpusocial.entity.User;
+import com.hunghost.onpusocial.repositories.PostRepository;
 import com.hunghost.onpusocial.repositories.UserRepository;
 import com.hunghost.onpusocial.service.user.UserCommandService;
 import com.hunghost.onpusocial.service.user.UserConverterService;
@@ -9,8 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -28,7 +34,6 @@ public class ApplicationTest {
     private UserRepository userRepository;
     @Autowired
     private UserQueryService userQueryService;
-
 
     @Test
     public void userConverterService_ConvertToEntity_Test() throws Exception {
@@ -48,19 +53,21 @@ public class ApplicationTest {
     }
     @Test
     public void userCommandService_SaveUser_Test() throws Exception {
-        UserDTO userdto = new UserDTO();
-        userdto.setFirstName("testName");
-        userdto.setLastName("testName");
-        userdto.setBirthday(13031998l);
-        userdto.setEmail("testemail@gmail.com");
-        userdto.setPhone("+380664651493");
-        userdto.setDescription("bla bla bla");
-        userdto.setUsername( "testlogin");
-        userdto.setPassword("testpassword");
-        userCommandService.saveUser(userConverterService.convertToEntity(userdto));
-        User user = userQueryService.getUserByUsername("sap");
-        assertEquals("sap", user.getUsername());
-        assertTrue(passwordEncoder.matches("pass",user.getPassword()));
+        User user = new User();
+        user.setFirstName("General");
+        user.setLastName("Admin");
+        user.setBirthday(12345L);
+        user.setEmail("test3@gmail.com");
+        user.setPhone("380664651493");
+        user.setDescription("Test description");
+        user.setUsername("login3");
+        user.setPassword(passwordEncoder.encode("pass"));
+        user.setAuthorities(Arrays.asList(
+                new Role("ROLE_USER"),
+                new Role("ROLE_ADMIN")));
+        userRepository.save(user);
+
+        userRepository.delete(user);
     }
 
     @Test
@@ -71,8 +78,10 @@ public class ApplicationTest {
     }
 
     @Test
-    public void userCommandService_SubscribeToUser_Test()throws Exception{
-       String answer = userCommandService.SubscribeToUser("sap","login");
-        assertEquals("Subscribed",answer);
+    public void userQueryService_getUserByLogin_Test() throws Exception{
+    User user = userQueryService.getUserByUsername("login");
+    assertEquals("login",user.getUsername());
+
     }
-}
+
+    }

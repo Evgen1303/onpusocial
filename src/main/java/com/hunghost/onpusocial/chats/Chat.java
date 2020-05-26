@@ -22,6 +22,11 @@ public class Chat {
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "lastmessage")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Message message;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User owner;
@@ -53,6 +58,14 @@ public class Chat {
                 ", owner=" + owner +
                 ", members=" + members +
                 '}';
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
     }
 
     public Long getId() {
