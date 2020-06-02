@@ -87,7 +87,7 @@ public class PostController {
     @GetMapping("/authuser")
     public Page<Post> getPostsForUser(
                                           @PageableDefault(size = DEFAULT_PAGE_SIZE)
-                                          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                          @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD, direction = Sort.Direction.DESC)})
                                                   Pageable pageable) {
         log.info("Получена страница постов №" + pageable.getPageNumber() + " Для авторизированного пользователя ");
         return postQueryService.getPostsForUser(pageable);
